@@ -1,4 +1,4 @@
-As a software developer for small businesses, a lot of the work I produce for my clients is confidential, whether via contract or by my morality.
+As a software developer for small businesses, a lot of the work I produce for my clients is confidential, whether via contract or by my own morality.
 
 This is a collection of a few economics-related projects I completed as part of my degree so far. While the files may not be easy to view directly on GitHub, downloading them will allow you to run the application yourself. To the best of my knowledge, all files are safe to download.
 
