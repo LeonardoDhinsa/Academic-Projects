@@ -10,3 +10,4 @@ The first two files describe different methods for solving the following competi
 
 As a bonus, there is a shortest path algorithm, an example of dynamic programming typically used in economics for sequential decision-making, analysis of social networks, etc.
 
+[Link to Shortest Path.nb](https://github.com/Dhinsa12/Academic-Projects/blob/main/Shortest%20Path.nb)
