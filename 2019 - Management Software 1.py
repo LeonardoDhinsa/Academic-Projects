@@ -1,6 +1,21 @@
 # These functions are recycled throughout the program. They have a very unique, narrow functionality.
 # However, they are required a number of times, and hence have been predefined first.
 
+# There are many interesting things to look out for in this code, but some of the ones that gave me particular joy are:
+
+# Client-Server Model
+# Hashing to store sensitive information
+# Complex business model
+# Aggregate SQL functions
+# JSON parsing
+# Abstract data types
+# Calling parameterized web service APIs
+# User-generated DDL scripts
+# A complex data model within a database
+# In the standard Python installation, you should have access to many of the imported libraries. 
+# However, you will need to install mysql.connector (for database-related content), matplotlib (for mathematical and list operations), and requests (for API access).
+# All libraries are free!
+
 def send_email(code, receiver_email, mycursor, db):  # -Used to send email verification codes
     # *CLIENT-SERVER MODEL* Accessing Gmail SMPTP sever to send emails. The default context of ssl validates
     # the host name and its certificates and optimizes the security of the connection 
