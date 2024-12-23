@@ -1,6 +1,3 @@
-# These functions are recycled throughout the program. They have a very unique, narrow functionality.
-# However, they are required a number of times, and hence have been predefined first.
-
 # There are many interesting things to look out for in this code, but some of the ones that gave me particular joy are:
 
 # Client-Server Model
@@ -15,6 +12,10 @@
 # In the standard Python installation, you should have access to many of the imported libraries. 
 # However, you will need to install mysql.connector (for database-related content), matplotlib (for mathematical and list operations), and requests (for API access).
 # All libraries are free!
+
+
+# These functions are recycled throughout the program. They have a very unique, narrow functionality.
+# However, they are required a number of times, and hence have been predefined first.
 
 def send_email(code, receiver_email, mycursor, db):  # -Used to send email verification codes
     # *CLIENT-SERVER MODEL* Accessing Gmail SMPTP sever to send emails. The default context of ssl validates
