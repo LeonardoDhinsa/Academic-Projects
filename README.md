@@ -16,6 +16,10 @@ This file includes a shortest path algorithm — an example of dynamic programmi
 
 [Link to Network Configuration.txt](https://github.com/Dhinsa12/Academic-Projects/blob/main/Network%20Configuration.txt)
 
+Having taken multivariable calculous in my second year, I decided to use computational tools to visualise some of the techniques.
+
+
+
 If you are interested in my work for businesses, my first client from 2019 has allowed me to publish the first edition of the management software I created for them. This software is no longer in use.
 
 
