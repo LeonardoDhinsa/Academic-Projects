@@ -5,8 +5,6 @@ The first two files describe different methods for solving the following competi
 ![Competitive Equilibrium](Competitive%20Equilibrium.png)
 ![Key](Key.png)
 
-![Competitive Equilibrium](Competitive%20Equilibrium.png)
-
 
 As a bonus, the third file is a shortest path algorithm, an example of dynamic programming typically used in economics for sequential decision-making, analysis of social networks, etc.
 
