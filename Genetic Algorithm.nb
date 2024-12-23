@@ -1,0 +1,3015 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[    137178,       3007]
+NotebookOptionsPosition[    136267,       2985]
+NotebookOutlinePosition[    136693,       3002]
+CellTagsIndexPosition[    136650,       2999]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[{
+ "In the following explanations:\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["w", "t"], TraditionalForm]],ExpressionUUID->
+  "edcad217-66e7-4f80-865f-2818043c629a"],
+ " - wages at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["r", "t"], TraditionalForm]],ExpressionUUID->
+  "5e07b3d7-9bae-467a-875f-a305bc194cef"],
+ " - return on capital at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["C", "t"], TraditionalForm]],ExpressionUUID->
+  "790c7391-886e-43fa-9049-26012368bcd6"],
+ " - consumption at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["L", "t"], TraditionalForm]],ExpressionUUID->
+  "084d4373-4842-4838-aca5-ad9dc7c92e69"],
+ " - labour at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["K", "t"], TraditionalForm]],ExpressionUUID->
+  "b35423ff-5c67-47ae-b891-4efbfcc08e4e"],
+ "- capital at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["I", "t"], TraditionalForm]],ExpressionUUID->
+  "9e3a5194-223b-4d5e-900f-e558ed1bbfe8"],
+ " - investment at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["Y", "t"], TraditionalForm]],ExpressionUUID->
+  "2ac8a5dd-1899-4fe8-853c-8907c3a3d066"],
+ "  - output at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    SuperscriptBox["K", "f"], "t"], TraditionalForm]],ExpressionUUID->
+  "3b823a6c-fe2f-4177-8a88-44b64998bd7e"],
+ " - firms choice of capital at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    SuperscriptBox["L", "f"], "t"], TraditionalForm]],ExpressionUUID->
+  "8d05067b-4723-4ed3-9ca7-a2c3bddf95e7"],
+ " - firms choice of labour at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["\[CapitalPi]", "t"], TraditionalForm]],ExpressionUUID->
+  "01cf727f-17d4-44b4-aca9-56f0b60320d8"],
+ " - profits at time t\n",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    SuperscriptBox["\[CapitalPi]", "f"], "t"], TraditionalForm]],
+  ExpressionUUID->"2e21dae6-e789-44c4-b3e3-e05e03ab75a5"],
+ " - firm profits at time t\n\[Delta] - depreciation of capital\nA - level of \
+technology\n\[Alpha] - Capital income share\n"
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0}},
+ CellChangeTimes->{{3.9412822140836*^9, 3.941282676921153*^9}, {
+  3.941282734057397*^9, 3.941283133786839*^9}, {3.941283166720852*^9, 
+  3.941283289636862*^9}, {3.941283326280148*^9, 3.9412834267424498`*^9}, {
+  3.941283495904553*^9, 3.941283744306903*^9}, {3.941283776007839*^9, 
+  3.941283780744055*^9}, {3.941284059630583*^9, 3.94128408665193*^9}, {
+  3.94128745724823*^9, 3.941287535058907*^9}, {3.94128757679062*^9, 
+  3.941287592982655*^9}, {3.941291549385469*^9, 3.941291577245109*^9}, {
+  3.941717453500353*^9, 
+  3.941717454148818*^9}},ExpressionUUID->"bd4535c1-81db-480c-a48b-\
+271b5da53c35"],
+
+Cell[BoxData[
+ StyleBox[
+  RowBox[{"Question", " ", "2"}], "Subsection"]], "Input",
+ CellChangeTimes->{{3.941458191671015*^9, 3.941458237231514*^9}, 
+   3.941458289194745*^9, {3.9414601228033667`*^9, 
+   3.941460123933454*^9}},ExpressionUUID->"802fc329-91d0-4500-b590-\
+5a2c0e444d73"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"The", " ", "'"}], 
+     RowBox[{"Score", "'"}], " ", "function", " ", "calculates", " ", "the", 
+     " ", "utility", " ", "until", " ", "consumption", " ", "has", " ", 
+     "reached", " ", "a", " ", "steady", " ", 
+     RowBox[{"state", ".", " ", "Then"}]}], ",", " ", 
+    RowBox[{"as", " ", "consumption", " ", "is", " ", "constant"}], ",", " ", 
+    
+    RowBox[{
+    "use", " ", "a", " ", "geometric", " ", "series", " ", "to", " ", "sum", 
+     " ", "the", " ", "remaining", " ", "values", " ", "to", " ", 
+     RowBox[{"infinity", ".", " ", "Given"}], " ", "that", " ", "by", " ", 
+     "maximising", " ", "household", " ", "utility", " ", "we", " ", "solve", 
+     " ", "the", " ", "model"}], ",", " ", 
+    RowBox[{
+    "the", " ", "Household", " ", "utility", " ", "function", " ", "acts", 
+     " ", "as", " ", "the", " ", "fitness", " ", "score", " ", "in", " ", 
+     "this", " ", "genetic", " ", "algorithm"}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"score", "[", 
+     RowBox[{"Cvalues_", ",", "T_", ",", "beta_", ",", "additionalPeriods_"}],
+      "]"}], ":=", 
+    RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"Local", " ", "Variables"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"utility1", ",", "utility2", ",", "utility"}], "}"}], ",", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"Using", " ", "the", " ", "household", " ", "function", " ", 
+         RowBox[{"(", 
+          RowBox[{
+          "as", " ", "described", " ", "in", " ", "Question", " ", "1"}], 
+          ")"}]}], ",", " ", 
+        RowBox[{
+         RowBox[{
+         "we", " ", "can", " ", "calculate", " ", "utility", " ", "from", " ",
+           "T"}], "=", "0"}], ",", " ", 
+        RowBox[{
+        "up", " ", "until", " ", "the", " ", "steady", " ", "state", " ", 
+         "of", " ", "capital", " ", "has", " ", "been", " ", 
+         RowBox[{"achieved", ".", " ", "'"}], "Additional", " ", 
+         RowBox[{"periods", "'"}], " ", "represents", " ", "the", " ", 
+         "number", " ", "of", " ", "periods", " ", "it", " ", "takes", " ", 
+         "for", " ", "constant", " ", "savings", " ", "rates", " ", "to", " ",
+          "create", " ", "a", " ", "consumption", " ", "steady", " ", 
+         "state"}]}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"utility1", "=", 
+        RowBox[{"Sum", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"beta", "^", "t"}], ")"}], "*", 
+           RowBox[{"Log", "[", 
+            RowBox[{"Cvalues", "[", 
+             RowBox[{"[", 
+              RowBox[{"t", "+", "1"}], "]"}], "]"}], "]"}]}], ",", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", "0", ",", 
+            RowBox[{"T", "+", "additionalPeriods"}]}], "}"}]}], "]"}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+         "Once", " ", "constant", " ", "consumption", " ", "has", " ", "been",
+           " ", "reached"}], ",", " ", 
+         RowBox[{
+          RowBox[{
+          "the", " ", "remaining", " ", "terms", " ", "in", " ", "the", " ", 
+           "series", " ", "until", " ", "\[Infinity]", " ", "can", " ", "be", 
+           " ", "calculated", " ", "using", " ", "the", " ", "sum", " ", "to",
+            " ", "infinity", " ", "property", " ", "of", " ", "geometric", 
+           " ", "series", " ", "as"}], " ", "|", "\[Beta]", "|", 
+          RowBox[{"<", "1"}]}], ",", " ", 
+         RowBox[{"satisfying", " ", "the", " ", "condition"}]}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"Log", 
+         RowBox[{"(", 
+          SuperscriptBox["C", "*"], ")"}], "*", 
+         FractionBox[
+          SuperscriptBox["\[Beta]", 
+           RowBox[{"T", "+", "additionalPeriods", "+", "1"}]], 
+          RowBox[{"1", "-", "\[Beta]"}]]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"utility2", "=", 
+        RowBox[{
+         RowBox[{"Log", "[", 
+          RowBox[{"Cvalues", "[", 
+           RowBox[{"[", 
+            RowBox[{"T", "+", "additionalPeriods"}], "]"}], "]"}], "]"}], "*", 
+         RowBox[{
+          RowBox[{"beta", "^", 
+           RowBox[{"(", 
+            RowBox[{"T", "+", "additionalPeriods", "+", "1"}], ")"}]}], "/", 
+          RowBox[{"(", 
+           RowBox[{"1", "-", "beta"}], ")"}]}]}]}], ";", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Summing", " ", "utility", " ", "from", " ", "T"}], "=", 
+           RowBox[{
+           "0", " ", "until", " ", "the", " ", "steady", " ", "state", " ", 
+            "of", " ", "consumption"}]}], ",", " ", 
+          RowBox[{
+          "with", " ", "the", " ", "remaining", " ", "period", " ", "until", 
+           " ", "infinity"}], ",", " ", 
+          RowBox[{"we", " ", "have", " ", "total", " ", "utility"}]}], ")"}], 
+        "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"utility", "=", 
+        RowBox[{"utility1", "+", "utility2"}]}], ";", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"Return", " ", "total", " ", "utility", " ", 
+         RowBox[{"(", 
+          RowBox[{"Fitness", " ", "score"}], ")"}]}], "*)"}], 
+       "\[IndentingNewLine]", "utility"}]}], "]"}]}], "\[IndentingNewLine]", 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"The", " ", "'"}], 
+       RowBox[{"CreateInitialChromosome", "'"}], " ", "function", " ", "is", 
+       " ", "called", " ", "iteratively", " ", "by", " ", "the", " ", "main", 
+       " ", "code", " ", "to", " ", "generate", " ", "the", " ", "starting", 
+       " ", 
+       RowBox[{"population", ".", " ", "Each"}], " ", "chromosome", " ", 
+       "consists", " ", "of", " ", "a", " ", "random", " ", "guess", " ", 
+       "of", " ", "savings", " ", "until", " ", "T"}], "=", 
+      RowBox[{
+       RowBox[{"70.", " ", "After", " ", "T"}], "=", "70"}]}], ",", " ", 
+     RowBox[{
+     "the", " ", "savings", " ", "steady", " ", "state", " ", "is", " ", 
+      "reached"}], ",", " ", 
+     RowBox[{
+     "and", " ", "the", " ", "series", " ", "is", " ", "extended", " ", "for",
+       " ", 
+      RowBox[{"some", " ", "'"}], 
+      RowBox[{"additionalPeriods", "'"}]}], ",", " ", 
+     RowBox[{"constant", " ", "at", " ", "the", " ", "steady", " ", "state"}],
+      ",", " ", 
+     RowBox[{
+     "to", " ", "allow", " ", "for", " ", "the", " ", "steady", " ", "state", 
+      " ", "of", " ", "consumption", " ", "to", " ", "be", " ", 
+      "achieved"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"CreateInitialChromosome", "[", 
+      RowBox[{
+      "T_", ",", "A_", ",", "delta_", ",", "alpha_", ",", "initialCapital_", 
+       ",", "additionalPeriods_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", "Variables"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"firstGuesses", ",", "totalGuesses"}], "}"}], ",", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+         "Generate", " ", "random", " ", "guesses", " ", "for", " ", "T", " ",
+           "periods"}], ",", " ", 
+         RowBox[{
+         "accommodating", " ", "for", " ", "mathematica", " ", "indexing", 
+          " ", "from", " ", "1"}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"firstGuesses", "=", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0.0001", ",", "0.9999"}], "}"}], ",", 
+           RowBox[{"T", "+", "1"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"'", 
+           RowBox[{"Join", "'"}], " ", "the", " ", "first", " ", "T", " ", 
+           "periods", " ", "to", " ", "a", " ", "constant", " ", "array", " ",
+            "of", " ", "the", " ", "savings", " ", "steady", " ", "state"}], 
+          ",", " ", 
+          RowBox[{"extended", " ", "by", " ", 
+           RowBox[{"enough", " ", "'"}], 
+           RowBox[{"additionalPeriods", "'"}], " ", "such", " ", "that", " ", 
+           "consumption", " ", "can", " ", "reach", " ", "its", " ", "steady",
+            " ", "state"}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"totalGuesses", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{"firstGuesses", ",", 
+           RowBox[{"ConstantArray", "[", 
+            RowBox[{
+             RowBox[{"firstGuesses", "[", 
+              RowBox[{"[", 
+               RowBox[{"-", "1"}], "]"}], "]"}], ",", "additionalPeriods"}], 
+            "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{"Using", " ", "the", " ", "savings", " ", "rate"}], ",", 
+          " ", 
+          RowBox[{"generate", " ", "the", " ", 
+           RowBox[{"chromosome", "'"}], "s", " ", "Consumption", " ", 
+           "series"}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"chromosomeGenerator", "[", 
+         RowBox[{
+         "T", ",", "A", ",", "delta", ",", "alpha", ",", "initialCapital", 
+          ",", "totalGuesses", ",", "False", ",", "additionalPeriods"}], 
+         "]"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"The", " ", "'"}], 
+      RowBox[{"chromosomeGenerator", "'"}], " ", "function", " ", "generates",
+       " ", "accompanying", " ", "series", " ", "for", " ", "C"}], ",", " ", 
+     "K", ",", " ", 
+     RowBox[{
+      RowBox[{
+      "I", " ", "and", " ", "Y", " ", "given", " ", "parameters", " ", "and", 
+       " ", "a", " ", "series", " ", "of", " ", "savings", " ", 
+       RowBox[{"rates", ".", " ", "The"}], " ", 
+       RowBox[{"parameter", " ", "'"}], 
+       RowBox[{"all", "'"}], " ", "determines", " ", "whether", " ", "the", 
+       " ", "function", " ", "returns", " ", "a", " ", "multi"}], "-", 
+      RowBox[{
+      "dimensional", " ", "list", " ", "containing", " ", "all", " ", "5", 
+       " ", "series", " ", "or", " ", "only", " ", "savings", " ", "and", " ", 
+       RowBox[{"consumption", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"chromosomeGenerator", "[", 
+      RowBox[{
+      "T_", ",", "A_", ",", "delta_", ",", "alpha_", ",", "initialCapital_", 
+       ",", "sValues_", ",", "all_", ",", "additionalPeriods_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", "Variables"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "capital", ",", "output", ",", "consumption", ",", "investment", ",", 
+         "t"}], "}"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+         "Initialize", " ", "lists", " ", "to", " ", "store", " ", "the", " ",
+           "calculated", " ", "values", " ", "of", " ", "K"}], ",", " ", "Y", 
+         ",", " ", "C", ",", " ", 
+         RowBox[{
+          RowBox[{"and", " ", 
+           RowBox[{"I", ".", " ", "The"}], " ", "length", " ", "of", " ", 
+           "these", " ", "lists", " ", "is", " ", "T"}], "+", "1", "+", 
+          RowBox[{"additionalPeriods", ".", " ", "T"}], "+", 
+          RowBox[{
+          "1", " ", "accounts", " ", "for", " ", "periods", " ", "indexed", 
+           " ", "from", " ", "1", " ", "instead", " ", "of", " ", "0"}]}], 
+         ",", 
+         RowBox[{
+          RowBox[{"and", " ", "T"}], "+", "1", "+", 
+          RowBox[{
+          "additionalPeriods", " ", "includes", " ", "additional", " ", 
+           "periods", " ", "to", " ", "allow", " ", "consumption", " ", "to", 
+           " ", "reach", " ", "its", " ", "steady", " ", 
+           RowBox[{"states", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"capital", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"T", "+", "1", "+", "additionalPeriods"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"output", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"T", "+", "1", "+", "additionalPeriods"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"consumption", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"T", "+", "1", "+", "additionalPeriods"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"investment", "=", 
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"T", "+", "1", "+", "additionalPeriods"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Place", " ", "the", " ", "initial", " ", "value", " ", "of", " ", 
+          "K", " ", "as", " ", "the", " ", "first", " ", "entry", " ", "in", 
+          " ", "the", " ", "capital", " ", 
+          RowBox[{"series", "."}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"capital", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", "initialCapital"}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "Use", " ", "the", " ", "production", " ", "function", " ", "Y"}], 
+           "=", 
+           RowBox[{
+            SuperscriptBox["K", "\[Alpha]"], 
+            SuperscriptBox["A", 
+             RowBox[{"1", "-", "\[Alpha]"}]], " ", "to", " ", "calculate", 
+            " ", "initial", " ", "output"}]}], ",", " ", 
+          RowBox[{"Y", "."}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"output", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"capital", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "^", "alpha"}], "*", 
+          RowBox[{"A", "^", 
+           RowBox[{"(", 
+            RowBox[{"1", "-", "alpha"}], ")"}]}]}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "Investment", " ", "is", " ", "the", " ", "share", " ", "of", " ", 
+           "output", " ", "that", " ", "is", " ", "saved"}], ",", " ", 
+          RowBox[{"not", " ", 
+           RowBox[{"consumed", ".", " ", "Calculate"}], " ", "initial", " ", 
+           "investment"}], ",", " ", 
+          RowBox[{
+           SubscriptBox["I", "t"], " ", "=", " ", 
+           RowBox[{
+            SubscriptBox["s", "t"], 
+            RowBox[{
+             SubscriptBox["Y", "t"], "."}]}]}]}], "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"investment", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", 
+         RowBox[{
+          RowBox[{"sValues", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "*", 
+          RowBox[{"output", "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "The", " ", "remaining", " ", "fraction", " ", "of", " ", "output", 
+           " ", "is", " ", "used", " ", "for", " ", 
+           RowBox[{"consumption", ".", " ", "Calculate"}], " ", "initial", 
+           " ", "consumption"}], ",", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"1", "-", 
+              SubscriptBox["s", "t"]}], ")"}], 
+            SubscriptBox["Y", "t"]}], "=", 
+           RowBox[{"C", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"consumption", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "-", 
+            RowBox[{"sValues", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}], "*", 
+          RowBox[{"output", "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "Iterate", " ", "through", " ", "remaining", " ", "periods", " ", 
+           "to", " ", "calculate", " ", "K"}], ",", " ", "Y", ",", " ", "C", 
+          ",", 
+          RowBox[{
+           RowBox[{"and", " ", 
+            RowBox[{"I", ".", " ", "Start"}], " ", "from", " ", "T"}], "=", 
+           RowBox[{"1", " ", 
+            RowBox[{"(", 
+             RowBox[{
+             "indexed", " ", "at", " ", "2", " ", "in", " ", "Mathematica"}], 
+             ")"}], " ", "until", " ", "the", " ", "final", " ", "period", 
+            " ", "when", " ", "consumptions", " ", "has", " ", "reached", " ",
+             "its", " ", "steady", " ", 
+            RowBox[{"state", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"For", "[", 
+         RowBox[{
+          RowBox[{"t", "=", "2"}], ",", 
+          RowBox[{"t", "<=", 
+           RowBox[{"T", "+", "additionalPeriods", "+", "1"}]}], ",", 
+          RowBox[{"t", "++"}], ",", "\[IndentingNewLine]", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{"Update", " ", 
+             RowBox[{"capital", ":", " ", 
+              SubscriptBox["K", "t"]}]}], "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "\[Delta]"}], ")"}], 
+              SubscriptBox["K", 
+               RowBox[{"t", "-", "1"}]]}], " ", "+", " ", 
+             SubscriptBox["I", 
+              RowBox[{"t", "-", "1"}]]}]}], "*)"}], "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"capital", "[", 
+             RowBox[{"[", "t", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "delta"}], ")"}], "*", 
+              RowBox[{"capital", "[", 
+               RowBox[{"[", 
+                RowBox[{"t", "-", "1"}], "]"}], "]"}]}], "+", 
+             RowBox[{"investment", "[", 
+              RowBox[{"[", 
+               RowBox[{"t", "-", "1"}], "]"}], "]"}]}]}], ";", 
+           "\[IndentingNewLine]", "\[IndentingNewLine]", 
+           RowBox[{"(*", 
+            RowBox[{
+             RowBox[{"Update", " ", 
+              RowBox[{"output", ":", " ", "Y"}]}], "=", 
+             RowBox[{
+              SuperscriptBox["K", "\[Alpha]"], 
+              SuperscriptBox["A", 
+               RowBox[{"1", "-", "\[Alpha]"}]]}]}], "*)"}], 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"output", "[", 
+             RowBox[{"[", "t", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"capital", "[", 
+               RowBox[{"[", "t", "]"}], "]"}], "^", "alpha"}], "*", 
+             RowBox[{"A", "^", 
+              RowBox[{"(", 
+               RowBox[{"1", "-", "alpha"}], ")"}]}]}]}], ";", 
+           "\[IndentingNewLine]", "\[IndentingNewLine]", 
+           RowBox[{"(*", 
+            RowBox[{
+             RowBox[{"Update", " ", 
+              RowBox[{"investment", ":", " ", 
+               SubscriptBox["I", "t"]}]}], " ", "=", " ", 
+             RowBox[{
+              SubscriptBox["s", "t"], 
+              SubscriptBox["Y", "t"]}]}], "*)"}], "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"investment", "[", 
+             RowBox[{"[", "t", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{"sValues", "[", 
+              RowBox[{"[", "t", "]"}], "]"}], "*", 
+             RowBox[{"output", "[", 
+              RowBox[{"[", "t", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+           "\[IndentingNewLine]", 
+           RowBox[{"(*", 
+            RowBox[{
+             RowBox[{"Update", " ", 
+              RowBox[{"consumption", ":", "C\:209c"}]}], "=", 
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"1", "-", "s\:209c"}], ")"}], 
+              RowBox[{"Y\:209c", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"consumption", "[", 
+             RowBox[{"[", "t", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"1", "-", 
+               RowBox[{"sValues", "[", 
+                RowBox[{"[", "t", "]"}], "]"}]}], ")"}], "*", 
+             RowBox[{"output", "[", 
+              RowBox[{"[", "t", "]"}], "]"}]}]}], ";"}]}], "]"}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "Return", " ", "savings", " ", "and", " ", "consumption", " ", 
+            RowBox[{"if", " ", "'"}], 
+            RowBox[{"all", "'"}], " ", "is", " ", "False"}], ";", " ", 
+           "otherwise"}], ",", " ", 
+          RowBox[{
+           RowBox[{"return", " ", "all", " ", 
+            RowBox[{"variables", ".", " ", "This"}], " ", "allows", " ", 
+            "the", " ", "function", " ", "to", " ", "have", " ", "dual"}], 
+           "-", 
+           RowBox[{
+           "functionality", " ", "increasing", " ", "reusability"}]}]}], 
+         "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"all", "==", "False"}], ",", 
+          RowBox[{"Return", "[", 
+           RowBox[{"{", 
+            RowBox[{"sValues", ",", "consumption"}], "}"}], "]"}], ",", 
+          RowBox[{"Return", "[", 
+           RowBox[{"{", 
+            RowBox[{
+            "sValues", ",", "consumption", ",", "capital", ",", "investment", 
+             ",", "output"}], "}"}], "]"}]}], "]"}]}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"The", " ", "'"}], 
+      RowBox[{"SelectionGen", "'"}], " ", "function", " ", "evaluates", " ", 
+      "the", " ", "fitness", " ", "of", " ", "each", " ", "chromosome", " ", 
+      "in", " ", "the", " ", "population", " ", "using", " ", 
+      RowBox[{"the", " ", "'"}], 
+      RowBox[{"score", "'"}], " ", 
+      RowBox[{"function", ".", " ", "By"}], " ", "choosing", " ", "which", 
+      " ", "chromosomes", " ", "become", " ", "parents", " ", "and", " ", 
+      "which", " ", "are", " ", "dropped"}], ",", " ", 
+     RowBox[{
+     "it", " ", "returns", " ", "the", " ", "top", " ", "50", "%", " ", "of", 
+      " ", "the", " ", "population", " ", "based", " ", "on", " ", 
+      RowBox[{"fitness", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"selectionGen", "[", 
+      RowBox[{
+      "population_", ",", "T_", ",", "beta_", ",", "additionalPeriods_"}], 
+      "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", "Variables"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+        "fitnessScores", ",", "halfLength", ",", "sortedIndexes", ",", 
+         "survivorPop", ",", "topFitnessScores"}], "}"}], ",", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Apply", " ", "the", " ", "score", " ", "function", " ", "to", " ", 
+         "each", " ", "chromosome", " ", "in", " ", "the", " ", "population", 
+         " ", 
+         RowBox[{"using", " ", "'"}], 
+         RowBox[{
+          RowBox[{"Map", "'"}], ".", " ", "The"}], " ", "fitness", " ", 
+         "score", " ", "is", " ", "based", " ", "on", " ", "consumption", " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+           "second", " ", "list", " ", "of", " ", "each", " ", "population", 
+            " ", "entity"}], ")"}], "."}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"fitnessScores", "=", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"score", "[", 
+             RowBox[{
+              RowBox[{"#", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], ",", "T", ",", "beta", ",", 
+              "additionalPeriods"}], "]"}], "&"}], ",", "population"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "Determine", " ", "the", " ", "number", " ", "of", " ", 
+            "solutions", " ", "to", " ", "retain", " ", 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"50", "%", " ", "of", " ", "the", " ", "population"}], 
+              ")"}], ".", 
+             RowBox[{"Using", " ", "'"}]}], 
+            RowBox[{"Ceiling", "'"}], " ", "accommodates", " ", "for", " ", 
+            "the", " ", "population", " ", "size", " ", "to", " ", "be", " ", 
+            "something", " ", "other", " ", "than", " ", "a", " ", "multiple",
+             " ", "of", " ", "4.", " ", "If", " ", "the", " ", "population", 
+            " ", "size", " ", "is", " ", "4", "n", " ", "or", " ", "4", "n"}],
+            "+", "1"}], ",", " ", 
+          RowBox[{
+           RowBox[{
+           "the", " ", "population", " ", "will", " ", "stay", " ", "of", " ",
+             "constant", " ", "size", " ", "in", " ", "all", " ", 
+            RowBox[{"generations", ".", " ", "If"}], " ", "it", " ", "is", 
+            " ", "4", "n"}], "+", 
+           RowBox[{"2", " ", "or", " ", "4", "n"}], "+", "3"}], ",", 
+          RowBox[{
+          "the", " ", "next", " ", "generation", " ", "will", " ", "have", 
+           " ", "a", " ", "population", " ", "size", " ", "of", " ", "4", 
+           RowBox[{"(", 
+            RowBox[{"n", "+", "1"}], ")"}]}], ",", 
+          RowBox[{"and", " ", "remain", " ", "constant", " ", "from", " ", 
+           RowBox[{"there", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"halfLength", "=", 
+         RowBox[{"Ceiling", "[", 
+          RowBox[{
+           RowBox[{"Length", "[", "fitnessScores", "]"}], "/", "2"}], "]"}]}],
+         ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "Sort", " ", "indexes", " ", "of", " ", "the", " ", "highest"}], 
+           "-", 
+           RowBox[{
+           "scoring", " ", "chromosomes", " ", "in", " ", "descending", " ", 
+            RowBox[{"order", ".", " ", "This"}], " ", "ensures", " ", "the", 
+            " ", "fittest", " ", "solutions", " ", "have", " ", "higher", " ",
+             "ranks"}]}], ",", " ", 
+          RowBox[{
+           RowBox[{
+           "ideal", " ", "when", " ", "later", " ", "implementing", " ", 
+            "rank"}], "-", 
+           RowBox[{"probability", " ", "for", " ", 
+            RowBox[{"breeding", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"sortedIndexes", "=", 
+         RowBox[{"Ordering", "[", 
+          RowBox[{"fitnessScores", ",", 
+           RowBox[{"-", "halfLength"}]}], "]"}]}], ";", "\[IndentingNewLine]",
+         "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "Create", " ", "a", " ", "sublist", " ", "of", " ", "the", " ", 
+           "population", " ", "with", " ", "the", " ", "highest"}], "-", 
+          RowBox[{"scoring", " ", 
+           RowBox[{"members", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"survivorPop", "=", 
+         RowBox[{"population", "[", 
+          RowBox[{"[", "sortedIndexes", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Keep", " ", "fitness", " ", "scores", " ", "for", " ", "the", " ", 
+          "surviving", " ", "population", " ", "to", " ", "track", " ", 
+          "score", " ", 
+          RowBox[{"evolution", "."}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"topFitnessScores", "=", 
+         RowBox[{"fitnessScores", "[", 
+          RowBox[{"[", "sortedIndexes", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "Return", " ", "a", " ", "multidimensional", " ", "list", " ", 
+           "containing", " ", "savings"}], ",", " ", "consumption", ",", " ", 
+          
+          RowBox[{
+          "and", " ", "fitness", " ", "scores", " ", "of", " ", "the", " ", 
+           "surviving", " ", 
+           RowBox[{"population", ".", " ", "We"}], " ", "do", " ", "this", 
+           " ", 
+           RowBox[{"using", " ", "'"}], 
+           RowBox[{"MapThread", "'"}]}], ",", " ", 
+          RowBox[{"similar", " ", 
+           RowBox[{"to", " ", "'"}], 
+           RowBox[{"Map", "'"}]}], ",", " ", 
+          RowBox[{
+          "but", " ", "applies", " ", "the", " ", "function", " ", "to", " ", 
+           "multiple", " ", "lists"}], ",", " ", 
+          RowBox[{"automatically", " ", "aligning", " ", "indexes"}]}], 
+         "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"MapThread", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Join", "[", 
+            RowBox[{"#1", ",", 
+             RowBox[{"{", 
+              RowBox[{"{", "#2", "}"}], "}"}]}], "]"}], "&"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"survivorPop", ",", "topFitnessScores"}], "}"}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"The", " ", "'"}], 
+      RowBox[{"parentsGen", "'"}], " ", "function", " ", "selects", " ", 
+      "which", " ", "chromosomes", " ", "become", " ", "parents", " ", 
+      "given", " ", "their", " ", "fitness", " ", "score"}], ",", " ", 
+     RowBox[{
+      RowBox[{"and", " ", "pairs", " ", "them", " ", 
+       RowBox[{"up", ".", " ", "It"}], " ", "uses", " ", "rank"}], "-", 
+      RowBox[{
+      "based", " ", "probability", " ", "to", " ", "give", " ", "higher", " ",
+        "fitness", " ", "solutions", " ", "a", " ", "better", " ", "chance", 
+       " ", "of", " ", "being", " ", 
+       RowBox[{"selected", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"parentsGen", "[", "survivorPop_", "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", "Variables"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"ranks", ",", "probabilities"}], "}"}], ",", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Assign", " ", "ranks", " ", "to", " ", "the", " ", "population", " ",
+          "based", " ", "on", " ", "their", " ", "order", " ", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"higher", " ", "index"}], " ", "=", " ", 
+            RowBox[{"better", " ", "fitness"}]}], ")"}], ".", " ", "We"}], 
+         " ", "make", " ", "use", " ", "of", " ", "the", " ", "fact", " ", 
+         "the", " ", "surviving", " ", "chromosomes", " ", "are", " ", 
+         "sorted", " ", "in", " ", "descending", " ", "order"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"ranks", "=", 
+         RowBox[{"Range", "[", 
+          RowBox[{"Length", "[", "survivorPop", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "Normalize", " ", "ranks", " ", "to", " ", "sum", " ", "to", " ", 
+           "1"}], ",", " ", 
+          RowBox[{
+          "creating", " ", "a", " ", "probability", " ", "distribution", " ", 
+           "for", " ", 
+           RowBox[{"selection", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"probabilities", "=", 
+         RowBox[{"ranks", "/", 
+          RowBox[{"Total", "[", "ranks", "]"}]}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "Generate", " ", "pairs", " ", "of", " ", "solutions", " ", "for", 
+           " ", "breeding", " ", "using", " ", "pseudorandom", " ", 
+           "selection", " ", "based", " ", "on", " ", 
+           RowBox[{"probabilities", ".", " ", "Given"}], " ", "that", " ", 
+           "each", " ", "pair", " ", "produces", " ", "two", " ", 
+           "chromosomes"}], ",", " ", 
+          RowBox[{"we", " ", 
+           RowBox[{"create", " ", "'"}], 
+           RowBox[{"n", "/", 
+            RowBox[{"2", "'"}]}], " ", "pairs", " ", "to", " ", 
+           RowBox[{"replace", " ", "'"}], 
+           RowBox[{"n", "'"}], " ", "discarded", " ", 
+           RowBox[{"chromosomes", ".", " ", 
+            RowBox[{"Using", " ", "'"}]}], 
+           RowBox[{"Table", "'"}]}], ",", " ", 
+          RowBox[{
+          "we", " ", "iterate", " ", "through", " ", "the", " ", 
+           "survivors"}], ",", " ", 
+          RowBox[{
+           RowBox[{"using", " ", "'"}], 
+           RowBox[{"RandomSample", "'"}], " ", "which", " ", "given", " ", 
+           "a", " ", "set", " ", "of", " ", "probabilities", " ", "and", " ", 
+           "associated", " ", "values"}], ",", " ", 
+          RowBox[{"creates", " ", "pairs", " ", "with", " ", "replacements"}],
+           ",", " ", 
+          RowBox[{"which", " ", "are", " ", "then", " ", 
+           RowBox[{"returned", ".", " ", "By"}], " ", "using", " ", 
+           "RandomSample"}], ",", " ", 
+          RowBox[{
+          "we", " ", "prevent", " ", "the", " ", "irregularity", " ", "of", 
+           " ", "a", " ", "solution", " ", "breeding", " ", "with", " ", 
+           RowBox[{"itself", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"RandomSample", "[", 
+           RowBox[{
+            RowBox[{"probabilities", "->", "survivorPop"}], ",", "2"}], "]"}],
+           ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Length", "[", "survivorPop", "]"}], "/", "2"}], "}"}]}], 
+         "]"}]}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"The", " ", "'"}], 
+       RowBox[{"decimalToBinary", "'"}], " ", "function", " ", "converts", 
+       " ", "a", " ", "decimal", " ", "number", " ", "to", " ", "a", " ", 
+       "binary", " ", "floating"}], "-", 
+      RowBox[{"point", " ", 
+       RowBox[{"representation", ".", " ", "Default"}], " ", "precision", " ",
+        "is", " ", "14", " ", "bits"}]}], ",", 
+     RowBox[{
+     "sufficient", " ", "for", " ", "numbers", " ", "between", " ", "0", " ", 
+      "and", " ", "1", " ", "up", " ", "to", " ", "4", " ", "decimal", " ", 
+      "places", " ", 
+      RowBox[{"accurately", ".", " ", "It"}], " ", "is", " ", "assumed", " ", 
+      "all", " ", "savings", " ", "rates", " ", "are", " ", "between", " ", 
+      "0", " ", "and", " ", "1"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"decimalToBinary", "[", 
+      RowBox[{"decimal_", ",", 
+       RowBox[{"precision_", ":", "14"}]}], "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", "Variables"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"fraction", "=", "decimal"}], ",", "digits"}], "}"}], ",", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+         "Generate", " ", "binary", " ", "digits", " ", "with", " ", "the", 
+          " ", "specified", " ", 
+          RowBox[{"precision", ".", " ", "Iterating"}], " ", 
+          RowBox[{"using", " ", "'"}], 
+          RowBox[{"Table", "'"}]}], ",", " ", 
+         RowBox[{
+         "we", " ", "multiply", " ", "the", " ", "decimal", " ", "value", " ",
+           "by", " ", "2"}], ",", " ", 
+         RowBox[{
+         "shifting", " ", "it", " ", "one", " ", "place", " ", "to", " ", 
+          "the", " ", "left", " ", "in", " ", 
+          RowBox[{"binary", ".", " ", "If"}], " ", "the", " ", "result", " ", 
+          "of", " ", "the", " ", "doubling", " ", "creates", " ", "a", " ", 
+          "value", " ", "greater", " ", "than", " ", "1"}], ",", " ", 
+         RowBox[{"then", " ", "we", " ", "add", " ", 
+          RowBox[{"a", " ", "'"}], 
+          RowBox[{"1", "'"}], " ", "to", " ", "our", " ", "binary", " ", 
+          "string"}], ",", " ", 
+         RowBox[{
+         "and", " ", "subtract", " ", "1", " ", "from", " ", "the", " ", 
+          "decimal", " ", 
+          RowBox[{"value", ".", " ", "If"}], " ", "doubling", " ", "does", 
+          " ", "not", " ", "make", " ", "the", " ", "decimal", " ", "value", 
+          " ", "exceed", " ", "1"}], ",", " ", 
+         RowBox[{"we", " ", "add", " ", 
+          RowBox[{"a", " ", "'"}], 
+          RowBox[{"0", "'"}], " ", "to", " ", "our", " ", "binary", " ", 
+          RowBox[{"string", ".", " ", "We"}], " ", "repeat", " ", "until", 
+          " ", "we", " ", "reach", " ", "the", " ", "given", " ", "level", 
+          " ", "of", " ", "precision"}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"digits", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"fraction", "=", 
+                RowBox[{"2", "*", "fraction"}]}], ")"}], ">=", "1"}], ",", 
+             RowBox[{
+              RowBox[{"fraction", "-=", "1"}], ";", "\"\<1\>\""}], ",", 
+             "\"\<0\>\""}], "]"}], ",", 
+           RowBox[{"{", "precision", "}"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Return", " ", "binary", " ", "representation", " ", "with", " ", 
+          "\"\<0.\>\"", " ", "prepended", " ", "to", " ", "indicate", " ", 
+          "it", " ", "is", " ", "less", " ", "than", " ", "1."}], "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"\"\<0.\>\"", "<>", 
+         RowBox[{"StringJoin", "[", "digits", "]"}]}]}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"The", " ", "'"}], 
+      RowBox[{"generateSolutions", "'"}], " ", "function", " ", "iteratively",
+       " ", 
+      RowBox[{"calls", " ", "'"}], 
+      RowBox[{"crossover", "'"}], " ", "for", " ", "each", " ", "breeding"}], 
+     "-", "pair"}], "*)"}], " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"generateSolutions", "[", 
+      RowBox[{"binaryData_", ",", "mutationRate_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", "Variables"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", "offspring", "}"}], ",", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Using", " ", "'"}], 
+          RowBox[{"Table", "'"}], " ", "apply", " ", 
+          RowBox[{"the", " ", "'"}], 
+          RowBox[{"crossover", "'"}], " ", "function", " ", "to", " ", "each",
+           " ", "pair"}], ",", " ", 
+         RowBox[{"creating", " ", "new", " ", 
+          RowBox[{"chromosomes", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"offspring", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"crossover", "[", 
+            RowBox[{
+             RowBox[{"binaryData", "[", 
+              RowBox[{"[", "j", "]"}], "]"}], ",", "mutationRate"}], "]"}], 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"j", ",", 
+             RowBox[{"Length", "[", "binaryData", "]"}]}], "}"}]}], "]"}]}], 
+        ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Flatten", " ", "the", " ", "pairs", " ", "of", " ", "new", " ", 
+          "chromosomes", " ", "into", " ", "a", " ", "single", " ", 
+          "population", " ", "and", " ", 
+          RowBox[{"return", "."}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"offspring", ",", "1"}], "]"}]}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\n", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"The", " ", "'"}], 
+      RowBox[{"crossover", "'"}], " ", "function", " ", "creates", " ", 
+      "child", " ", "chromosomes", " ", "from", " ", "parent", " ", 
+      RowBox[{"chromosomes", ".", " ", "Each"}], " ", "pair", " ", "of", " ", 
+      
+      RowBox[{"chromosome", "'"}], "s", " ", "are", " ", "split", " ", "at", 
+      " ", "a", " ", "random", " ", "point"}], ",", " ", 
+     RowBox[{
+     "and", " ", "the", " ", "halves", " ", "are", " ", "recombined", " ", 
+      "to", " ", "form", " ", "2", " ", "child", " ", 
+      RowBox[{"chromosomes", ".", " ", "Mutations"}], " ", "are", " ", "also",
+       " ", 
+      RowBox[{"applied", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"crossover", "[", 
+      RowBox[{"couple_", ",", "mutationRate_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", 
+        RowBox[{"Variables", ":", " ", 
+         RowBox[{
+         "split", " ", "each", " ", "pair", " ", "into", " ", "parent", " ", 
+          "1", " ", "and", " ", "parent", " ", "2"}]}]}], "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"parent1", "=", 
+          RowBox[{"couple", "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+         RowBox[{"parent2", "=", 
+          RowBox[{"couple", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], ",", "offspring1", ",", 
+         "offspring2", ",", "maxSplitPos", ",", "splitPos", ",", "string1", 
+         ",", "string2"}], "}"}], ",", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+         "Determine", " ", "the", " ", "possible", " ", "split", " ", 
+          RowBox[{"positions", ".", " ", "We"}], " ", "do", " ", "not", " ", 
+          "split", " ", "before", " ", "the", " ", "floating", " ", "point"}],
+          ",", " ", 
+         RowBox[{
+         "as", " ", "all", " ", "solutions", " ", "being", " ", "less", " ", 
+          "than", " ", "1", " ", "will", " ", "mean", " ", "this", " ", "has",
+           " ", "no", " ", 
+          RowBox[{"effect", ".", " ", "Splitting"}], " ", "at", " ", "the", 
+          " ", "last", " ", "point", " ", "to", " ", "create", " ", 
+          "children", " ", "identical", " ", "to", " ", "parents", " ", "is", 
+          " ", 
+          RowBox[{"acceptable", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"maxSplitPos", "=", 
+         RowBox[{"StringLength", "[", 
+          RowBox[{"StringDrop", "[", 
+           RowBox[{
+            RowBox[{"parent1", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", "2"}], "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Select", " ", "a", " ", "pseudorandom", " ", "point", " ", "where", 
+          " ", "the", " ", "chromosomes", " ", "will", " ", "be", " ", 
+          "split"}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"splitPos", "=", 
+         RowBox[{"RandomInteger", "[", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "maxSplitPos"}], "}"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "To", " ", "create", " ", "the", " ", "first", " ", "chromosome"}], 
+          ",", " ", 
+          RowBox[{"we", " ", 
+           RowBox[{"use", " ", "'"}], 
+           RowBox[{"Table", "'"}], " ", "to", " ", "iterate", " ", "through", 
+           " ", "all", " ", "savings", " ", "rates"}]}], "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"offspring1", "=", 
+         RowBox[{"Table", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{"We", " ", "remove", " ", 
+            RowBox[{"the", " ", "'"}], 
+            RowBox[{"0.", "'"}], " ", "prefix", " ", "as", " ", "applying", 
+            " ", "a", " ", "mutation", " ", "to", " ", "this", " ", "bit", 
+            " ", "would", " ", "create", " ", "a", " ", "savings", " ", 
+            "rate", " ", "that", " ", "exceeds", " ", "1"}], "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"string1", "=", 
+             RowBox[{"StringDrop", "[", 
+              RowBox[{
+               RowBox[{"parent1", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], ",", "2"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"string2", "=", 
+             RowBox[{"StringDrop", "[", 
+              RowBox[{
+               RowBox[{"parent2", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], ",", "2"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", "\[IndentingNewLine]", 
+            RowBox[{"(*", 
+             RowBox[{
+              RowBox[{
+              "The", " ", "first", " ", "chromosome", " ", "is", " ", "from", 
+               " ", "the", " ", "from", " ", "the", " ", "first", " ", "part",
+                " ", "of", " ", "parent", " ", "one"}], ",", " ", 
+              RowBox[{
+              "and", " ", "the", " ", "second", " ", "part", " ", "of", " ", 
+               "parent", " ", "two"}], ",", " ", 
+              RowBox[{"dictated", " ", "by", " ", "the", " ", "split", " ", 
+               RowBox[{"position", ".", " ", 
+                RowBox[{"The", " ", "'"}]}], 
+               RowBox[{"mutateChromosome", "'"}], " ", "function", " ", 
+               "applies", " ", "any", " ", "possible", " ", "mutations"}], 
+              ",", " ", 
+              RowBox[{
+               RowBox[{"and", " ", "'"}], 
+               RowBox[{"0.", "'"}], " ", "is", " ", 
+               RowBox[{"reattached", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+            RowBox[{"\"\<0.\>\"", "<>", 
+             RowBox[{"mutateChromosome", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"StringTake", "[", 
+                 RowBox[{"string1", ",", "splitPos"}], "]"}], "<>", 
+                RowBox[{"StringDrop", "[", 
+                 RowBox[{"string2", ",", "splitPos"}], "]"}]}], ",", 
+               "mutationRate"}], "]"}]}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{"Length", "[", "parent1", "]"}]}], "}"}]}], "]"}]}], ";",
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+          RowBox[{
+          "Generate", " ", "the", " ", "second", " ", "chromosomes", " ", 
+           "in", " ", "a", " ", "similar", " ", "manner", " ", "to", " ", 
+           "the", " ", "first"}], ",", " ", 
+          RowBox[{
+          "instead", " ", "taking", " ", "the", " ", "first", " ", "part", 
+           " ", "of", " ", "parent", " ", "two"}], ",", " ", 
+          RowBox[{
+          "and", " ", "the", " ", "second", " ", "part", " ", "of", " ", 
+           "parent", " ", 
+           RowBox[{"one", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"offspring2", "=", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"string1", "=", 
+             RowBox[{"StringDrop", "[", 
+              RowBox[{
+               RowBox[{"parent1", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], ",", "2"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"string2", "=", 
+             RowBox[{"StringDrop", "[", 
+              RowBox[{
+               RowBox[{"parent2", "[", 
+                RowBox[{"[", "i", "]"}], "]"}], ",", "2"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<0.\>\"", "<>", 
+             RowBox[{"mutateChromosome", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"StringTake", "[", 
+                 RowBox[{"string2", ",", "splitPos"}], "]"}], "<>", 
+                RowBox[{"StringDrop", "[", 
+                 RowBox[{"string1", ",", "splitPos"}], "]"}]}], ",", 
+               "mutationRate"}], "]"}]}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{"Length", "[", "parent2", "]"}]}], "}"}]}], "]"}]}], ";",
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Return", " ", "the", " ", "child", " ", "chromosomes", " ", 
+          "created", " ", "from", " ", "parent", " ", "chromosomes"}], "*)"}],
+         "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{"offspring1", ",", "offspring2"}], "}"}]}]}], "]"}]}], ";"}],
+    "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"The", " ", "'"}], 
+       RowBox[{"mutateChromosome", "'"}], " ", "function", " ", "applies", 
+       " ", "bit"}], "-", 
+      RowBox[{
+      "flipping", " ", "mutations", " ", "to", " ", "a", " ", "chromosome", 
+       " ", "based", " ", "on", " ", "the", " ", "mutation", " ", "rate"}]}], 
+     ",", " ", 
+     RowBox[{"mutating", " ", "the", " ", "children"}]}], "*)"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"mutateChromosome", "[", 
+      RowBox[{"bitString_", ",", "mutationRate_"}], "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", 
+        RowBox[{"Variables", ":", " ", 
+         RowBox[{
+         "Split", " ", "the", " ", "string", " ", "into", " ", "individual", 
+          " ", 
+          RowBox[{"bits", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"bits", "=", 
+          RowBox[{"Characters", "[", "bitString", "]"}]}], ",", 
+         "flippedBits"}], "}"}], ",", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "To", " ", "the", " ", "list", " ", "of", " ", "bits", " ", "we", " ",
+          "apply", " ", "a", " ", "set", " ", "of", " ", "rules", " ", "that",
+          " ", "will", " ", "consider", " ", "mutating", " ", "each", " ", 
+         "bit", " ", "according", " ", "to", " ", "the", " ", "mutation", " ",
+          "rate"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"flippedBits", "=", 
+         RowBox[{"bits", "/.", " ", 
+          RowBox[{"{", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+           RowBox[{"(*", 
+            RowBox[{
+             RowBox[{"For", " ", "each", " ", "bit"}], ",", " ", 
+             RowBox[{
+              RowBox[{
+              "generate", " ", "a", " ", "pseudorandom", " ", "number", " ", 
+               "between", " ", "0", " ", "and", " ", "1.", " ", "If", " ", 
+               "that", " ", "number", " ", "is", " ", "less", " ", "than", 
+               " ", "the", " ", "mutation", " ", "rate", " ", "then", " ", 
+               "apply", " ", "a", " ", "bit"}], "-", 
+              RowBox[{"flipping", " ", "mutation", " ", 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"0", "->", 
+                  RowBox[{
+                   RowBox[{"1", " ", "/", " ", "1"}], "->", "0"}]}], ")"}], 
+                ".", " ", "There"}], " ", "is", " ", "an", " ", "x", "%", " ",
+                "chance", " ", "the", " ", "randomly", " ", "generated", " ", 
+               "number", " ", "is", " ", "below", " ", "the", " ", "mutation",
+                " ", "rate"}]}], ",", " ", "x", ",", " ", 
+             RowBox[{"and", " ", "a", " ", 
+              RowBox[{"(", 
+               RowBox[{"1", "-", "x"}], ")"}], "%", " ", "chance", " ", "it", 
+              " ", "is", " ", "above"}]}], "*)"}], "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"\"\<0\>\"", ":>", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"RandomReal", "[", "]"}], "<", "mutationRate"}], ",", 
+               "\"\<1\>\"", ",", "\"\<0\>\""}], "]"}]}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"\"\<1\>\"", ":>", 
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"RandomReal", "[", "]"}], "<", "mutationRate"}], ",", 
+               "\"\<0\>\"", ",", "\"\<1\>\""}], "]"}]}]}], "}"}]}]}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Combine", " ", "mutated", " ", "bits", " ", "back", " ", "into", 
+          " ", "a", " ", "string", " ", "and", " ", 
+          RowBox[{"return", "."}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"StringJoin", "[", "flippedBits", "]"}]}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", 
+   
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"The", " ", "'"}], 
+      RowBox[{"binaryToDecimal", "'"}], " ", "function", " ", "converts", " ",
+       "a", " ", "binary", " ", "floating"}], "-", 
+     RowBox[{
+     "point", " ", "string", " ", "back", " ", "to", " ", "a", " ", "decimal",
+       " ", 
+      RowBox[{"value", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"binaryToDecimal", "[", "binaryString_", "]"}], ":=", 
+     RowBox[{"Module", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{"Local", " ", 
+        RowBox[{"Variables", ":", " ", 
+         RowBox[{"Remove", " ", "\"\<0.\>\"", " ", "from", " ", "binary", " ", 
+          RowBox[{"string", "."}]}]}]}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"fraction", "=", 
+          RowBox[{"StringDrop", "[", 
+           RowBox[{"binaryString", ",", "2"}], "]"}]}], ",", 
+         RowBox[{"decimal", "=", "0"}], ",", "i"}], "}"}], ",", 
+       "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Iterate", " ", "through", " ", "each", " ", "binary", " ", "digit", 
+         " ", "and", " ", "calculate", " ", "its", " ", "contribution", " ", 
+         "to", " ", "the", " ", "decimal", " ", 
+         RowBox[{"value", "."}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"For", "[", 
+         RowBox[{
+          RowBox[{"i", "=", "1"}], ",", 
+          RowBox[{"i", "<=", 
+           RowBox[{"StringLength", "[", "fraction", "]"}]}], ",", 
+          RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{
+            "Convert", " ", "each", " ", "bit", " ", "to", " ", "a", " ", 
+             "decimal", " ", "value", " ", "by", " ", "multiply", " ", "it", 
+             " ", "by", " ", 
+             SuperscriptBox["2", 
+              RowBox[{"-", "i"}]]}], ",", " ", 
+            RowBox[{
+            "where", " ", "i", " ", "is", " ", "the", " ", "distance", " ", 
+             "from", " ", "the", " ", "floating", " ", 
+             RowBox[{"point", ".", " ", "Summing"}], " ", "these", " ", 
+             "values", " ", "creates", " ", "the", " ", "full", " ", 
+             "decimal", " ", "expression"}]}], "*)"}], "\[IndentingNewLine]", 
+          
+          RowBox[{"decimal", "+=", 
+           RowBox[{
+            RowBox[{"ToExpression", "[", 
+             RowBox[{"StringTake", "[", 
+              RowBox[{"fraction", ",", 
+               RowBox[{"{", "i", "}"}]}], "]"}], "]"}], "*", 
+            RowBox[{"2.", "^", 
+             RowBox[{"(", 
+              RowBox[{"-", "i"}], ")"}]}]}]}]}], "]"}], ";", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{"Return", " ", "the", " ", "decimal", " ", 
+          RowBox[{"value", "."}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"N", "[", "decimal", "]"}]}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.941472141502047*^9, 3.941472142233781*^9}, {
+   3.94147431507222*^9, 3.941474350497839*^9}, {3.941476702925177*^9, 
+   3.941476705645512*^9}, {3.9414767495174713`*^9, 3.941476753574951*^9}, {
+   3.9414768104245872`*^9, 3.941476874029463*^9}, {3.941556967889729*^9, 
+   3.94155700686563*^9}, {3.941557046182979*^9, 3.941557051992787*^9}, {
+   3.941557127052273*^9, 3.9415571966080437`*^9}, {3.941557237185961*^9, 
+   3.9415572385268784`*^9}, {3.941608031495975*^9, 3.941608032734509*^9}, {
+   3.941610733353874*^9, 3.941610813282258*^9}, {3.941624971767501*^9, 
+   3.9416249975401583`*^9}, {3.941625032814129*^9, 3.941625082128834*^9}, 
+   3.941625118102043*^9, {3.941716947958323*^9, 3.941717264984501*^9}, {
+   3.9417173032342997`*^9, 3.9417173291755667`*^9}, {3.943946323982707*^9, 
+   3.9439463388503313`*^9}},ExpressionUUID->"768b716f-f608-47a2-8e96-\
+c73d8e60a4f1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Define", " ", "key", " ", "parameters", " ", "as", " ", "specified", " ", 
+    "in", " ", "the", " ", "problem", " ", 
+    RowBox[{"statement", ".", " ", "Greek"}], " ", "letters", " ", "are", " ",
+     "written", " ", "in", " ", "their", " ", "full", " ", "names", " ", 
+    "due", " ", "to", " ", "the", " ", "constraint", " ", "of", " ", "using", 
+    " ", "symbols", " ", "as", " ", "arguements"}], "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"A", "=", "1"}], ";"}], " ", "\n", 
+   RowBox[{
+    RowBox[{"delta", "=", "0.1"}], ";"}], " ", "\n", 
+   RowBox[{
+    RowBox[{"alpha", "=", "0.33"}], ";"}], " ", "\n", 
+   RowBox[{
+    RowBox[{"beta", "=", "0.98"}], ";"}], " ", "\n", 
+   RowBox[{
+    RowBox[{"initialCapital", "=", "0.1"}], ";"}], " ", "\n", 
+   RowBox[{
+    RowBox[{"T", "=", "70"}], ";"}], " ", "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "The", " ", "code", " ", "accommodates", " ", "population", " ", "sizes", 
+     " ", "that", " ", "are", " ", "not", " ", "multiples", " ", "of", " ", 
+     "4"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"populationSize", "=", "80"}], ";"}], " ", "\n", 
+   RowBox[{
+    RowBox[{"mutationRate", "=", "0.025"}], ";"}], " ", "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Minimum", " ", "number", " ", "of", " ", "generations"}], "*)"}],
+    "\n", 
+   RowBox[{
+    RowBox[{"generations", "=", "1000"}], ";"}], " ", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Maximum", " ", "number", " ", "of", " ", "generations"}], "*)"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"maximumGenerations", "=", "2000"}], ";"}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"To", " ", "simulate", " ", "steady"}], "-", 
+      RowBox[{"state", " ", "convergence"}]}], ",", " ", 
+     RowBox[{
+     "the", " ", "savings", " ", "rate", " ", "is", " ", "kept", " ", 
+      "constant", " ", "after", " ", "T", " ", "periods"}], ",", 
+     RowBox[{
+     "allowing", " ", "consumption", " ", "and", " ", "other", " ", 
+      "variables", " ", "to", " ", 
+      RowBox[{"stabilize", ".", " ", "'"}], 
+      RowBox[{"additionalPeriods", "'"}], " ", "specifies", " ", "how", " ", 
+      "many", " ", "extra", " ", "periods", " ", "are", " ", 
+      RowBox[{"required", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"additionalPeriods", "=", "40"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "After", " ", "the", " ", "minimum", " ", "number", " ", "of", " ", 
+      "generations"}], ",", " ", 
+     RowBox[{
+     "if", " ", "the", " ", "fitness", " ", "score", " ", "is", " ", 
+      "constant", " ", "for", " ", "so", " ", "many", " ", "periods"}], ",", 
+     " ", 
+     RowBox[{
+     "we", " ", "assume", " ", "no", " ", "more", " ", "progress", " ", "to", 
+      " ", "be", " ", 
+      RowBox[{"made", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"consecutivePeriods", " ", "=", " ", "50"}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "An", " ", "array", " ", "to", " ", "store", " ", "the", " ", "best", 
+      " ", "solution", " ", "from", " ", "each", " ", "generation"}], ",", 
+     " ", 
+     RowBox[{"helpful", " ", "for", " ", "tracking", " ", 
+      RowBox[{"evolution", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"bestsolution", "=", 
+     RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Main", " ", "Body"}], "*)"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Using", " ", "'"}], 
+      RowBox[{"Table", "'"}]}], ",", " ", 
+     RowBox[{
+     "generate", " ", "the", " ", "initial", " ", "population", " ", "of", 
+      " ", 
+      RowBox[{"chromosomes", ".", " ", "Each"}], " ", "chromosome", " ", 
+      "will", " ", "contain", " ", "a", " ", "savings", " ", "rate", " ", 
+      "series", " ", "and", " ", "consumption", " ", 
+      RowBox[{"series", ".", " ", "Further"}], " ", "generations", " ", 
+      "will", " ", "be", " ", "a", " ", "combination", " ", "of", " ", 
+      "surviving", " ", "parents", " ", "and", " ", "new", " ", 
+      RowBox[{"offspring", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"population", "=", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"CreateInitialChromosome", "[", 
+        RowBox[{
+        "T", ",", "A", ",", "delta", ",", "alpha", ",", "initialCapital", ",",
+          "additionalPeriods"}], "]"}], ",", 
+       RowBox[{"{", "populationSize", "}"}]}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Start", " ", "loop", " ", "counter"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"i", "=", "1"}], ";"}], " ", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Perform", " ", "the", " ", "genetic", " ", "algorithm", " ", "for", " ",
+       "at", " ", 
+      RowBox[{"least", " ", "'"}], 
+      RowBox[{"generations", "'"}], " ", 
+      RowBox[{"loops", ".", " ", "Then"}], " ", "if", " ", "there", " ", 
+      "has", " ", "been", " ", 
+      RowBox[{"enough", " ", "'"}], 
+      RowBox[{"consecutivePeriods", "'"}], " ", "where", " ", "the", " ", 
+      "fitness", " ", "score", " ", "has", " ", "not", " ", "changed"}], ",", 
+     " ", 
+     RowBox[{"the", " ", "code", " ", "will", " ", 
+      RowBox[{"stop", ".", " ", "Otherwise"}], " ", "the", " ", "code", " ", 
+      "will", " ", "run", " ", "until", " ", 
+      RowBox[{"the", " ", "'"}], 
+      RowBox[{"maximumGenerations", "'"}], " ", "are", " ", "reached"}]}], 
+    "*)"}], "\n", 
+   RowBox[{"While", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+     "The", " ", "Loop", " ", "will", " ", "always", " ", "run", " ", "for", 
+      " ", "at", " ", "least", " ", "the", " ", "number", " ", "of", " ", 
+      "required", " ", "generations"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"i", "<=", "generations"}], "||", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "The", " ", "loop", " ", "will", " ", "continue", " ", "beyond", " ", 
+        "the", " ", "minimum", " ", "number", " ", "of", " ", "generations", 
+        " ", "if", " ", "it", " ", "has", " ", "not", " ", "exceeded", " ", 
+        "the", " ", "maximum", " ", "number", " ", "of", " ", "generations", 
+        " ", "AND"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"i", "<=", "maximumGenerations"}], "&&", 
+        "\[IndentingNewLine]", "\[IndentingNewLine]", " ", 
+        RowBox[{"(*", 
+         RowBox[{
+         "The", " ", "minimum", " ", "number", " ", "of", " ", "periods", " ",
+           "for", " ", "the", " ", "fitness", " ", "score", " ", "to", " ", 
+          "converge", " ", "has", " ", "not", " ", "been", " ", "reached"}], 
+         "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"Length", "[", "bestsolution", "]"}], "<", 
+           "consecutivePeriods"}], "||", "\[IndentingNewLine]", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{
+            "OR", " ", "the", " ", "last", " ", "fitness", " ", "score", " ", 
+             "has", " ", "not", " ", "been", " ", "constant", " ", "for", " ",
+              "long", " ", "enough"}], ",", 
+            RowBox[{
+            "indicating", " ", "the", " ", "solution", " ", "is", " ", 
+             "still", " ", 
+             RowBox[{"improving", ".", " ", "The"}], " ", 
+             RowBox[{"\[OpenCurlyQuote]", "Union", "\[CloseCurlyQuote]"}], 
+             " ", "function", " ", "counts", " ", "how", " ", "many", " ", 
+             "unique", " ", "fitness", " ", "scores", " ", "have", " ", 
+             "been", " ", "recorded", " ", "in", " ", "the", " ", "previous", 
+             " ", 
+             RowBox[{"periods", ".", " ", "If"}], " ", "this", " ", "exceeds",
+              " ", "1"}], ",", " ", 
+            RowBox[{
+            "it", " ", "means", " ", "the", " ", "solution", " ", "is", " ", 
+             "still", " ", "improving"}]}], "*)"}], "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"Length", "[", 
+            RowBox[{"Union", "[", 
+             RowBox[{"bestsolution", "[", 
+              RowBox[{"[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "consecutivePeriods"}], ";;"}], ",", "3", ",", 
+                "1"}], "]"}], "]"}], "]"}], "]"}], ">", "1"}]}], ")"}]}], 
+       ")"}]}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+      "Select", " ", "the", " ", "top", " ", "50", "%", " ", "of", " ", "the",
+        " ", "population", " ", "based", " ", "on", " ", "fitness", " ", 
+       "scores", " ", "to", " ", "act", " ", "as", " ", 
+       RowBox[{"parents", "."}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"survivorPop", "=", 
+       RowBox[{"selectionGen", "[", 
+        RowBox[{
+        "population", ",", "T", ",", "beta", ",", "additionalPeriods"}], 
+        "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "The", " ", "last", " ", "entry", " ", "in", " ", "the", " ", "sorted",
+         " ", "survivor", " ", "population", " ", "has", " ", "the", " ", 
+        "highest", " ", "fitness", " ", 
+        RowBox[{"score", ".", " ", "Track"}], " ", "this", " ", "chromosome", 
+        " ", "for", " ", "monitoring", " ", "the", " ", "evolution", " ", 
+        "of", " ", "the", " ", "best", " ", 
+        RowBox[{"solution", "."}]}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"AppendTo", "[", 
+       RowBox[{"bestsolution", ",", 
+        RowBox[{"survivorPop", "[", 
+         RowBox[{"[", 
+          RowBox[{"Length", "[", "survivorPop", "]"}], "]"}], "]"}]}], "]"}], 
+      ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{
+        "If", " ", "we", " ", "have", " ", "reached", " ", "the", " ", 
+         "final", " ", "generation"}], ",", " ", 
+        RowBox[{
+        "there", " ", "is", " ", "no", " ", "need", " ", "to", " ", "create", 
+         " ", "a", " ", "new", " ", "population", " ", "as", " ", "there", 
+         " ", "are", " ", "no", " ", "further", " ", 
+         RowBox[{"generations", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"If", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "The", " ", "same", " ", "conditions", " ", "as", " ", "in", " ", 
+         "the", " ", "while", " ", "loop"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"i", "<=", "generations"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"i", "<=", "maximumGenerations"}], "&&", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Length", "[", "bestsolution", "]"}], "<", 
+              "consecutivePeriods"}], "||", 
+             RowBox[{
+              RowBox[{"Length", "[", 
+               RowBox[{"Union", "[", 
+                RowBox[{"bestsolution", "[", 
+                 RowBox[{"[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"-", "consecutivePeriods"}], ";;"}], ",", "3", 
+                   ",", "1"}], "]"}], "]"}], "]"}], "]"}], ">", "1"}]}], 
+            ")"}]}], ")"}]}], ",", "\[IndentingNewLine]", 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", 
+         RowBox[{
+         "Generate", " ", "pairs", " ", "of", " ", "chromosomes", " ", "for", 
+          " ", 
+          RowBox[{"breeding", "."}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"pairs", "=", 
+          RowBox[{"parentsGen", "[", "survivorPop", "]"}]}], ";", 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Using", " ", "'"}], 
+            RowBox[{"Map", "'"}]}], ",", " ", 
+           RowBox[{
+           "we", " ", "apply", " ", "a", " ", "function", " ", "that", " ", 
+            "extracts", " ", "the", " ", "savings", " ", "rate", " ", "from", 
+            " ", "each", " ", "parent", " ", 
+            RowBox[{"chromosome", ".", "From"}], " ", "this", " ", "point", 
+            " ", "onwards", " ", "we", " ", "do", " ", "not", " ", "need", 
+            " ", "the", " ", "consumption", " ", "series", " ", "or", " ", 
+            "the", " ", "fitness", " ", "score"}], ",", " ", 
+           RowBox[{
+           "so", " ", "removing", " ", "them", " ", "promotes", " ", 
+            "efficiency"}]}], "*)"}], 
+         RowBox[{"parentsSaving", "=", 
+          RowBox[{"Map", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"#", "[", 
+                RowBox[{"[", 
+                 RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", 
+               RowBox[{"#", "[", 
+                RowBox[{"[", 
+                 RowBox[{"2", ",", "1"}], "]"}], "]"}]}], "}"}], "&"}], ",", 
+            "pairs"}], "]"}]}], ";", "\[IndentingNewLine]", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+           RowBox[{
+           "Trim", " ", "the", " ", "savings", " ", "rate", " ", "series", 
+            " ", "to", " ", "exclude", " ", "the", " ", "additional", " ", 
+            "periods", " ", "used", " ", "for", " ", "steady"}], "-", 
+           RowBox[{
+           "state", " ", "convergence", " ", "to", " ", "promotes", " ", 
+            RowBox[{"efficiency", ".", " ", "These"}], " ", "are", " ", "no", 
+            " ", "longer", " ", 
+            RowBox[{"needed", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+         RowBox[{
+         "parentsSavingT", "=", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+          
+          RowBox[{"(*", 
+           RowBox[{
+            RowBox[{"The", " ", 
+             RowBox[{"outer", "'"}], 
+             RowBox[{"Map", "'"}], " ", "applies", " ", "the", " ", "inner", 
+             " ", "function", " ", "to", " ", "all", " ", "pairs", " ", "of", 
+             " ", "parents"}], ",", " ", 
+            RowBox[{"the", " ", 
+             RowBox[{"inner", " ", "'"}], 
+             RowBox[{"Map", "'"}], " ", "applies", " ", "the", " ", 
+             "function", " ", "to", " ", "each", " ", "individual", " ", 
+             "pair"}]}], "*)"}], "\[IndentingNewLine]", 
+          RowBox[{"Map", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Map", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+              RowBox[{"(*", 
+               RowBox[{
+                RowBox[{
+                "To", " ", "the", " ", "list", " ", "of", " ", "savings"}], 
+                ",", 
+                RowBox[{"'", 
+                 RowBox[{"Take", "'"}], " ", "the", " ", "savings", " ", 
+                 RowBox[{"rates", "'"}], 
+                 RowBox[{"upTo", "'"}], " ", "the", " ", "steady", " ", 
+                 "state", " ", "of", " ", "savings"}], ",", 
+                RowBox[{"excluding", " ", "all", " ", "additionalPeriods"}]}],
+                "*)"}], "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"Take", "[", 
+                 RowBox[{"#", ",", 
+                  RowBox[{"UpTo", "[", 
+                   RowBox[{
+                    RowBox[{"Length", "[", "#", "]"}], "-", 
+                    "additionalPeriods"}], "]"}]}], "]"}], "&"}], ",", "#"}], 
+              "]"}], "&"}], ",", "parentsSaving"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Convert", " ", "the", " ", "trimmed", " ", "savings", " ", "rates",
+            " ", "to", " ", "binary", " ", 
+           RowBox[{"representations", "."}]}], "*)"}], "\[IndentingNewLine]", 
+         
+         RowBox[{"binaryData", "=", 
+          RowBox[{"Map", "[", 
+           RowBox[{"decimalToBinary", ",", "parentsSavingT", ",", 
+            RowBox[{"{", "3", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Create", " ", "child", " ", "chromosomes", " ", "using", " ", 
+           "the", " ", "binary", " ", "data", " ", "and", " ", "the", " ", 
+           "mutation", " ", 
+           RowBox[{"rate", "."}]}], "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"children", "=", 
+          RowBox[{"generateSolutions", "[", 
+           RowBox[{"binaryData", ",", "mutationRate"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Convert", " ", "the", " ", "binary", " ", "offspring", " ", 
+           "chromosomes", " ", "back", " ", "to", " ", "decimal", " ", 
+           RowBox[{"format", ".", "The"}], " ", "function", " ", "is", " ", 
+           "applied", " ", "using", " ", 
+           RowBox[{"a", "'"}], 
+           RowBox[{"Map", "'"}], " ", "at", " ", "level", " ", "3", " ", 
+           RowBox[{"(", 
+            RowBox[{
+            "the", " ", "function", " ", "is", " ", "applied", " ", "to", " ",
+              "a", " ", "list", " ", "containing", " ", "pairs", " ", "of", 
+             " ", "lists"}], ")"}]}], "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"decodedSolutions", "=", 
+          RowBox[{"Map", "[", 
+           RowBox[{"binaryToDecimal", ",", "children", ",", 
+            RowBox[{"{", "2", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+         "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+           RowBox[{
+           "For", " ", "the", " ", "purposes", " ", "of", " ", "scoring", " ",
+             "in", " ", "the", " ", "next", " ", "generation"}], ",", 
+           RowBox[{
+           "extend", " ", "each", " ", "child", " ", "chromosomes", " ", "by",
+             " ", 
+            RowBox[{"the", " ", "'"}], 
+            RowBox[{"additionalPeriods", "'"}], " ", "required", " ", "for", 
+            " ", "consumption", " ", "to", " ", "reach", " ", "its", " ", 
+            "steady", " ", 
+            RowBox[{"state", ".", " ", "We"}], " ", 
+            RowBox[{"use", " ", "'"}], 
+            RowBox[{"Map", "'"}], " ", 
+            RowBox[{"to", " ", "'"}], 
+            RowBox[{"Join", "'"}], " ", "the", " ", "savings", " ", "rates", 
+            " ", "with", " ", "a", " ", "constant", " ", "array", " ", 
+            "containing", " ", "each", " ", "chromosomes", " ", "steady", " ",
+             "state", " ", "savings", " ", "rate", " ", "for", " ", "every", 
+            " ", "additional", " ", "period", " ", "required", " ", "for", 
+            " ", "consumption", " ", "convergence"}]}], "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"extendedChildren", "=", 
+          RowBox[{"Map", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Join", "[", 
+              RowBox[{"#", ",", 
+               RowBox[{"ConstantArray", "[", 
+                RowBox[{
+                 RowBox[{"Last", "[", "#", "]"}], ",", "additionalPeriods"}], 
+                "]"}]}], "]"}], "&"}], ",", "decodedSolutions"}], "]"}]}], 
+         ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+          "Combine", " ", "surviving", " ", "parents", " ", "and", " ", "new",
+            " ", "children", " ", "to", " ", "form", " ", "the", " ", "next", 
+           " ", 
+           RowBox[{"generation", "'"}], "s", " ", 
+           RowBox[{"population", ".", "From"}], " ", "the", " ", "surviving", 
+           " ", "parents", " ", "we", " ", "extract", " ", "only", " ", "the",
+            " ", "savings", " ", "rate", " ", "data"}], "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"newPop", "=", 
+          RowBox[{"Join", "[", 
+           RowBox[{"extendedChildren", ",", 
+            RowBox[{"survivorPop", "[", 
+             RowBox[{"[", 
+              RowBox[{"All", ",", "1"}], "]"}], "]"}]}], "]"}]}], ";", 
+         "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Using", "'"}], 
+            RowBox[{"Table", "'"}]}], ",", 
+           RowBox[{
+           "we", " ", "generate", " ", "consumption", " ", "values", " ", 
+            "for", " ", "the", " ", "new", " ", "population", " ", "via", " ",
+             "their", " ", "savings", " ", 
+            RowBox[{"rates", ".", "In"}], " ", "the", " ", "event", " ", 
+            "the", " ", "new", " ", "population", " ", "is", " ", "not", " ", 
+            "the", " ", "same", " ", "size", " ", "as", " ", "the", " ", 
+            "previous", " ", "generation", " ", "due", " ", "to", " ", "the", 
+            " ", "initial", " ", "population", " ", "size", " ", "being", " ",
+             "divisible", " ", "by", " ", "4", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+              "split", " ", "into", " ", "the", " ", "top", " ", "50", "%", 
+               " ", "and", " ", "then", " ", "reproduced", " ", "using", " ", 
+               "breeding"}], "-", "pairs"}], ")"}]}], ",", 
+           RowBox[{
+           "we", " ", "continue", " ", "on", " ", "with", " ", "an", " ", 
+            "adjusted", " ", "population", " ", "size"}], ",", 
+           RowBox[{
+           "at", " ", "most", " ", "1", " ", "chromosome", " ", "bigger", " ",
+             "or", " ", "smaller"}]}], "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"population", "=", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"chromosomeGenerator", "[", 
+             RowBox[{
+             "T", ",", "A", ",", "delta", ",", "alpha", ",", "initialCapital",
+               ",", 
+              RowBox[{"newPop", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "False", ",", 
+              "additionalPeriods"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", 
+              RowBox[{"Length", "[", "newPop", "]"}]}], "}"}]}], "]"}]}], ";",
+          "\[IndentingNewLine]", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{"Increment", " ", "loop", " ", "counter"}], "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"i", "++"}], ";"}]}], " ", "\[IndentingNewLine]", 
+       "\[IndentingNewLine]", "]"}]}]}], "\n", "]"}], "\[IndentingNewLine]", 
+   "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Use", " ", 
+       RowBox[{"the", " ", "'"}], 
+       RowBox[{"chromosomeGenerator", "'"}], " ", "function", " ", 
+       RowBox[{"with", " ", "'"}], "all"}], "=", 
+      RowBox[{
+       RowBox[{"True", "'"}], " ", "to", " ", "retrieve", " ", "the", " ", 
+       "fittest", " ", 
+       RowBox[{"chromosome", "'"}], "s", " ", "full", " ", "series", " ", 
+       "of", " ", "savings"}]}], ",", " ", "consumption", ",", " ", "capital",
+      ",", " ", "investment", ",", " ", 
+     RowBox[{"and", " ", 
+      RowBox[{"output", ".", " ", "Given"}], " ", "that", " ", "the", " ", 
+      "fittest", " ", "chromosomes", " ", "always", " ", "survives", " ", 
+      "to", " ", "the", " ", "next", " ", "generation"}], ",", " ", 
+     RowBox[{"the", " ", "final", " ", "value", " ", "in", " ", 
+      RowBox[{"the", " ", "'"}], 
+      RowBox[{"bestSolution", "'"}], " ", "array", " ", "will", " ", 
+      "contain", " ", "the", " ", "highest", " ", "scoring", " ", 
+      "chromosome"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"variables", "=", 
+     RowBox[{"chromosomeGenerator", "[", 
+      RowBox[{
+      "T", ",", "A", ",", "delta", ",", "alpha", ",", "initialCapital", ",", 
+       RowBox[{
+        RowBox[{"bestsolution", "[", 
+         RowBox[{"[", 
+          RowBox[{"Length", "[", "bestsolution", "]"}], "]"}], "]"}], "[", 
+        RowBox[{"[", "1", "]"}], "]"}], ",", "True", ",", 
+       "additionalPeriods"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "We", " ", "can", " ", "split", " ", "variables", " ", "into", " ", 
+      "sublists"}], ",", " ", 
+     RowBox[{"i", ".", "e"}], ",", " ", "s", ",", " ", "C", ",", " ", "K", 
+     ",", " ", "I", ",", " ", "Y"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"savingGenetic", " ", "=", " ", 
+     RowBox[{"variables", "[", 
+      RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"consumptionGenetic", " ", "=", " ", 
+     RowBox[{"variables", "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Given", " ", "that", " ", "in", " ", "the", " ", "competitive", " ", 
+      "equilibrium", " ", "Household", " ", "allocation", " ", "of", " ", 
+      "capital", " ", "is", " ", "equal", " ", "to", " ", "firm", " ", 
+      "allocation", " ", "of", " ", "capital"}], ",", 
+     RowBox[{
+     "our", " ", "capital", " ", "stock", " ", "solves", " ", "for", " ", 
+      "both", " ", "values"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"capitalstockGenetic", " ", "=", " ", 
+     RowBox[{"variables", "[", 
+      RowBox[{"[", "3", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"investmentGenetic", " ", "=", " ", 
+     RowBox[{"variables", "[", 
+      RowBox[{"[", "4", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"outputGenetic", "=", " ", 
+     RowBox[{"variables", "[", 
+      RowBox[{"[", "5", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Using", " ", "the", " ", "first", " ", "order", " ", "conditions", " ", 
+     "from", " ", "part", " ", "1", " ", "we", " ", "can", " ", "derive", " ",
+      "vectors", " ", "for", " ", "wages", " ", "and", " ", "returns", " ", 
+     "on", " ", "capital"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"wageGenetic", "=", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "-", "alpha"}], ")"}], "*", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        FractionBox["capitalstockGenetic", "A"], ")"}], "alpha"], "*", 
+      "A"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"returnGenetic", "=", 
+     RowBox[{"alpha", "*", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        FractionBox["A", "capitalstockGenetic"], ")"}], 
+       RowBox[{"1", "-", "alpha"}]]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Plot", " ", "the", " ", "evolution", " ", "of", " ", "capital", " ", 
+     "stock", " ", "over", " ", "time", " ", "for", " ", "the", " ", "best", 
+     " ", 
+     RowBox[{"solution", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"ListPlot", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+      "Mathematica", " ", "indexes", " ", "lists", " ", "from", " ", "1"}], 
+      ",", " ", 
+      RowBox[{
+       RowBox[{
+       "but", " ", "our", " ", "periods", " ", "start", " ", "from", " ", 
+        "T"}], "=", 
+       RowBox[{"0.", " ", "We", " ", 
+        RowBox[{"use", " ", "'"}], 
+        RowBox[{"Table", "'"}], " ", "to", " ", "subtract", " ", "1", " ", 
+        "from", " ", "each", " ", "index"}]}], ",", 
+      RowBox[{
+      "ensuring", " ", "our", " ", "graph", " ", "accurately", " ", "plots", 
+       " ", "the", " ", 
+       RowBox[{"data", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"t", ",", 
+         RowBox[{"capitalstockGenetic", "[", 
+          RowBox[{"[", 
+           RowBox[{"t", "+", "1"}], "]"}], "]"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", "0", ",", 
+         RowBox[{
+          RowBox[{"Length", "[", "capitalstockGenetic", "]"}], "-", "1"}]}], 
+        "}"}]}], "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Graph", " ", "settings"}], ",", " ", 
+       RowBox[{"including", " ", "range"}], ",", " ", 
+       RowBox[{"axis", " ", "labels"}], ",", " ", 
+       RowBox[{"and", " ", "legend"}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"Joined", "->", "True"}], ",", 
+     RowBox[{"PlotRange", "->", "All"}], ",", 
+     RowBox[{"AxesLabel", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Time period\>\"", ",", "\"\<Capital Stock\>\""}], "}"}]}],
+      ",", " ", 
+     RowBox[{"PlotLegends", "->", 
+      RowBox[{"Placed", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<Capital stock\>\"", "}"}], ",", "Below"}], 
+       "]"}]}]}], "]"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Extract", " ", "the", " ", "fitness", " ", "scores", " ", "of", " ", 
+      "the", " ", "best", " ", "solutions", " ", "from", " ", "each", " ", 
+      RowBox[{"generation", ".", " ", "These"}], " ", "are", " ", "stored", 
+      " ", "in", " ", "the", " ", "first", " ", "list", " ", "of", " ", 
+      "each", " ", "chromosome"}], ",", " ", 
+     RowBox[{"in", " ", "the", " ", "first", " ", "position"}]}], "*)"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"FitnessScores", "=", 
+     RowBox[{"bestsolution", "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "3", ",", "1"}], "]"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Plot", " ", "the", " ", "evolution", " ", "of", " ", "fitness", " ", 
+     "scores", " ", "across", " ", 
+     RowBox[{"generations", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"ListPlot", "[", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+      "Mathematica", " ", "indexes", " ", "lists", " ", "from", " ", "1"}], 
+      ",", " ", 
+      RowBox[{
+       RowBox[{
+       "but", " ", "our", " ", "periods", " ", "start", " ", "from", " ", 
+        "T"}], "=", 
+       RowBox[{"0.", " ", "We", " ", 
+        RowBox[{"use", " ", "'"}], 
+        RowBox[{"Table", "'"}], " ", "to", " ", "subtract", " ", "1", " ", 
+        "from", " ", "each", " ", "index"}]}], ",", 
+      RowBox[{
+      "ensuring", " ", "our", " ", "graph", " ", "accurately", " ", "plots", 
+       " ", "the", " ", 
+       RowBox[{"data", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"t", ",", 
+         RowBox[{"FitnessScores", "[", 
+          RowBox[{"[", 
+           RowBox[{"t", "+", "1"}], "]"}], "]"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"t", ",", "0", ",", 
+         RowBox[{
+          RowBox[{"Length", "[", "FitnessScores", "]"}], "-", "1"}]}], 
+        "}"}]}], "]"}], ",", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Graph", " ", "settings"}], ",", " ", 
+       RowBox[{"including", " ", "range"}], ",", " ", 
+       RowBox[{"axis", " ", "labels"}], ",", " ", 
+       RowBox[{"and", " ", "legend"}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"Joined", "->", "True"}], ",", 
+     RowBox[{"PlotRange", "->", "All"}], ",", 
+     RowBox[{"AxesLabel", "->", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Time period\>\"", ",", "\"\<Fitness Score\>\""}], "}"}]}],
+      ",", " ", 
+     RowBox[{"PlotLegends", "->", 
+      RowBox[{"Placed", "[", 
+       RowBox[{
+        RowBox[{"{", "\"\<Fitness Score\>\"", "}"}], ",", "Below"}], 
+       "]"}]}]}], "]"}], "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.941460173247862*^9, 3.941460173536096*^9}, {
+   3.941460237874442*^9, 3.941460244508222*^9}, {3.941460288132372*^9, 
+   3.941460308436695*^9}, 3.9414604755864573`*^9, {3.941465914700469*^9, 
+   3.9414659171662292`*^9}, 3.9414660203560457`*^9, {3.9414683016836033`*^9, 
+   3.941468357560541*^9}, {3.941468423207086*^9, 3.941468424038597*^9}, {
+   3.941468460057778*^9, 3.941468528751906*^9}, {3.9414688940203733`*^9, 
+   3.941468894400341*^9}, 3.941468984930481*^9, 3.9414690783547163`*^9, {
+   3.9414718859874268`*^9, 3.9414720078138103`*^9}, 3.941472732909615*^9, {
+   3.941474362367908*^9, 3.941474368222509*^9}, {3.9414768784818363`*^9, 
+   3.9414769087115517`*^9}, {3.9415576097079983`*^9, 3.94155765534304*^9}, {
+   3.94155776596457*^9, 3.941557880803684*^9}, {3.94155819007329*^9, 
+   3.941558216797428*^9}, {3.941558312235818*^9, 3.941558417379176*^9}, {
+   3.941558486218954*^9, 3.941558512443572*^9}, {3.941559076879889*^9, 
+   3.941559177445352*^9}, 3.941559236774002*^9, {3.941559422412636*^9, 
+   3.94155959328636*^9}, {3.94156032768581*^9, 3.941560341133685*^9}, {
+   3.941560922130019*^9, 3.941561153710833*^9}, {3.941561771080882*^9, 
+   3.9415619355112867`*^9}, {3.941562703085747*^9, 3.9415628275164337`*^9}, {
+   3.941562889148137*^9, 3.941562933445346*^9}, {3.941562964340743*^9, 
+   3.941562981752193*^9}, 3.941608057846732*^9, {3.94160812039705*^9, 
+   3.941608144032535*^9}, {3.941608191095289*^9, 3.941608307107725*^9}, {
+   3.9416086753079557`*^9, 3.941608676465538*^9}, {3.9416093701306887`*^9, 
+   3.941609372307365*^9}, {3.941610819059854*^9, 3.9416108383377132`*^9}, {
+   3.941612634552643*^9, 3.941612634924165*^9}, {3.9416226236234083`*^9, 
+   3.941622644313363*^9}, 3.94162268752674*^9, {3.941625133202867*^9, 
+   3.9416251848314037`*^9}, {3.9417175198513193`*^9, 3.9417175253891478`*^9}},
+ 
+ CellLabel->"In[42]:=",ExpressionUUID->"7d614356-b069-4323-88c9-7aad0c51a0a6"],
+
+Cell[BoxData[
+ TemplateBox[{
+   GraphicsBox[{{}, 
+     InterpretationBox[{
+       TagBox[{{}, {}, 
+         TagBox[{
+           RGBColor[0.368417, 0.506779, 0.709798], 
+           PointSize[0.009166666666666668], 
+           AbsoluteThickness[2], 
+           LineBox[CompressedData["
+1:eJw9kwtQVGUYhlHkjnJZFRKHABkuwujKTVxEXlhugsLeWHbXZUWEEEWJ20KG
+goACym4aOoqRkDmRQtKmYxcMkYpyNDEUgolcQ0TBSEJgJJipHP/PM3PmzDPP
+eb7/nH/OcU7JEqXNNzAwyPr/fHml43Tty+PrkFc0HpIn6e5y5fcyNsCvGrNz
+jjseMTbF7L6z1j2yZ4ytoR7f0LI0fprxYsxNGqaWFs0ytoc2eOXV/bx5eMXL
+MWiXlhd7zZCxE2Iu8L/0VxkxdkFF78iCoR0mjF0RPprad2XElLEbBryOz40u
+NGfsgcq2ipnHSuKVOFX7zfC+CWJveEgFSyL+JV6Faw2ePV3ChYy5OO+t1Fcn
+EK9BWj5XyO2xZOyDr0qOPunyIfZFt/6zukN2dL8fZL0fd2S7WzP2h/2DgMYp
+CxvGAbAJ+VQ1d5V4Le48K7h4o404EB5ld2KOrSZeh8S41nRHU2Ie/uSItfP6
+iYPgNBa0dNl2DuP1cIvdW9PFtWUcjDUFfrX9x4k34EWrf1N6MHEI7KJXHOOe
+onnAzlsTjlYq5kuAxS5D8TWWdH8orK3bj2veIh+KTyRQz1RTHwbPfE7wb3cZ
+l4Rh6xHOyRp38nyUyrl2Nzjk+fC83DwRMk37FQ7dSN9Qhx/5cNQ7Oa+e4VEf
+AX3E5HW9EfkIRKqL3O4Fko+Edr1LkMcHbF5JJC6NiuYS99D8KKQ3V/20aA35
+KOSatHSPxFsxHw3Li5W5Aa3ko3Fw0OF8qpzmb8RUU9uDW1X0/hsx/jxQ15xM
++xODcK8d+qcKer4YFHQOqLemUh+La3d7Y1TO5GPxhzYsc+3n5Dchx2/gn845
+8ptgaBZ0+baG/GaIvYt3fvGE/GbweJaFw0to/Tj8MD++VfCYni8OxeuLlX+L
+6fuIh+fNqWfhUvLxODOrcpfkUy/AUff6gW2ebD4EyOjrDrtiTOsJ8Oj0R+8m
+9zFuF6Bx8u38QznUC/FGJ69R58rWgxAp7wV7Paij9YSwdz+jMDFk3C5E5fNj
+e+6//r5EyMoYy160lDFEkGtXJJ11pF4Er76nuefcqBfh95w0geMq6sXYubxu
+zN6fejGshvN0dUHUiyEVmKl1odSLcTCq4H1VFPUS2JR7P7ywiXoJlnVc+qVO
+SL0EnW7mSh7tX7sE0wvKHKoU1CegxhixWvp/kAAbLf92XAr1CUj/y8W/K436
+BNzUJ33HyaBeiomk5DynTOql8Bn0NZjZQ70UWt2QviGbeilqr9YLHfKoT8Qi
+qUa5S019Imx/zrxXU0h9IsquTypP7qU+Ed73ZjMLi6iX4YDzbuG6/dTL0Pa9
+BXegmHoZbHJMzbcfoF6GE2aZbV2l1Mtxv19u6VpOvRwGTt4nth2kXo4xr933
+qw5RL0fUrhbxmQrqFSh/JzK6oZJ6BeJ8H744+vp/U2B/02JN9mHqFajvaLHn
+H6F+C340evND42rqt0C2tc78W+KSLUiykIama2zxH3qDvRg=
+            "]]}, Annotation[#, "Charting`Private`Tag#1"]& ]}, {
+        "WolframDynamicHighlight", <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>}], 
+       StyleBox[
+        DynamicBox[
+         (Charting`HighlightActionBox["DynamicHighlight", {}, 
+          Slot["HighlightElements"], 
+          Slot["LayoutOptions"], 
+          Slot["Meta"], 
+          Charting`HighlightActionFunction["DynamicHighlight", {{{}, {}, 
+             Annotation[{
+               Hue[0.67, 0.6, 0.6], 
+               Directive[
+                PointSize[0.009166666666666668], 
+                RGBColor[0.368417, 0.506779, 0.709798], 
+                AbsoluteThickness[2]], 
+               Line[CompressedData["
+1:eJw9kwtQVGUYhlHkjnJZFRKHABkuwujKTVxEXlhugsLeWHbXZUWEEEWJ20KG
+goACym4aOoqRkDmRQtKmYxcMkYpyNDEUgolcQ0TBSEJgJJipHP/PM3PmzDPP
+eb7/nH/OcU7JEqXNNzAwyPr/fHml43Tty+PrkFc0HpIn6e5y5fcyNsCvGrNz
+jjseMTbF7L6z1j2yZ4ytoR7f0LI0fprxYsxNGqaWFs0ytoc2eOXV/bx5eMXL
+MWiXlhd7zZCxE2Iu8L/0VxkxdkFF78iCoR0mjF0RPprad2XElLEbBryOz40u
+NGfsgcq2ipnHSuKVOFX7zfC+CWJveEgFSyL+JV6Faw2ePV3ChYy5OO+t1Fcn
+EK9BWj5XyO2xZOyDr0qOPunyIfZFt/6zukN2dL8fZL0fd2S7WzP2h/2DgMYp
+CxvGAbAJ+VQ1d5V4Le48K7h4o404EB5ld2KOrSZeh8S41nRHU2Ie/uSItfP6
+iYPgNBa0dNl2DuP1cIvdW9PFtWUcjDUFfrX9x4k34EWrf1N6MHEI7KJXHOOe
+onnAzlsTjlYq5kuAxS5D8TWWdH8orK3bj2veIh+KTyRQz1RTHwbPfE7wb3cZ
+l4Rh6xHOyRp38nyUyrl2Nzjk+fC83DwRMk37FQ7dSN9Qhx/5cNQ7Oa+e4VEf
+AX3E5HW9EfkIRKqL3O4Fko+Edr1LkMcHbF5JJC6NiuYS99D8KKQ3V/20aA35
+KOSatHSPxFsxHw3Li5W5Aa3ko3Fw0OF8qpzmb8RUU9uDW1X0/hsx/jxQ15xM
++xODcK8d+qcKer4YFHQOqLemUh+La3d7Y1TO5GPxhzYsc+3n5Dchx2/gn845
+8ptgaBZ0+baG/GaIvYt3fvGE/GbweJaFw0to/Tj8MD++VfCYni8OxeuLlX+L
+6fuIh+fNqWfhUvLxODOrcpfkUy/AUff6gW2ebD4EyOjrDrtiTOsJ8Oj0R+8m
+9zFuF6Bx8u38QznUC/FGJ69R58rWgxAp7wV7Paij9YSwdz+jMDFk3C5E5fNj
+e+6//r5EyMoYy160lDFEkGtXJJ11pF4Er76nuefcqBfh95w0geMq6sXYubxu
+zN6fejGshvN0dUHUiyEVmKl1odSLcTCq4H1VFPUS2JR7P7ywiXoJlnVc+qVO
+SL0EnW7mSh7tX7sE0wvKHKoU1CegxhixWvp/kAAbLf92XAr1CUj/y8W/K436
+BNzUJ33HyaBeiomk5DynTOql8Bn0NZjZQ70UWt2QviGbeilqr9YLHfKoT8Qi
+qUa5S019Imx/zrxXU0h9IsquTypP7qU+Ed73ZjMLi6iX4YDzbuG6/dTL0Pa9
+BXegmHoZbHJMzbcfoF6GE2aZbV2l1Mtxv19u6VpOvRwGTt4nth2kXo4xr933
+qw5RL0fUrhbxmQrqFSh/JzK6oZJ6BeJ8H744+vp/U2B/02JN9mHqFajvaLHn
+H6F+C340evND42rqt0C2tc78W+KSLUiykIama2zxH3qDvRg=
+                "]]}, "Charting`Private`Tag#1"]}}, <|
+           "HighlightElements" -> <|
+             "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>, 
+            "LayoutOptions" -> <|
+             "PanelPlotLayout" -> <||>, 
+              "PlotRange" -> {{0, 110.}, {0, 4.8467792009426205`}}, 
+              "Frame" -> {{False, False}, {False, False}}, 
+              "AxesOrigin" -> {0, 0}, "ImageSize" -> {360, 360/GoldenRatio}, 
+              "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+              GoldenRatio^(-1), "DefaultStyle" -> {
+                Directive[
+                 PointSize[0.009166666666666668], 
+                 RGBColor[0.368417, 0.506779, 0.709798], 
+                 AbsoluteThickness[2]]}, 
+              "HighlightLabelingFunctions" -> <|
+               "CoordinatesToolOptions" -> ({
+                  Identity[
+                   Part[#, 1]], 
+                  Identity[
+                   Part[#, 2]]}& ), 
+                "ScalingFunctions" -> {{Identity, Identity}, {
+                  Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+              False|>, 
+            "Meta" -> <|
+             "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, 
+              "Function" -> ListPlot, "GroupHighlight" -> False|>|>]]& )[<|
+          "HighlightElements" -> <|
+            "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>, 
+           "LayoutOptions" -> <|
+            "PanelPlotLayout" -> <||>, 
+             "PlotRange" -> {{0, 110.}, {0, 4.8467792009426205`}}, 
+             "Frame" -> {{False, False}, {False, False}}, 
+             "AxesOrigin" -> {0, 0}, "ImageSize" -> {360, 360/GoldenRatio}, 
+             "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+             GoldenRatio^(-1), "DefaultStyle" -> {
+               Directive[
+                PointSize[0.009166666666666668], 
+                RGBColor[0.368417, 0.506779, 0.709798], 
+                AbsoluteThickness[2]]}, 
+             "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+                 Identity[
+                  Part[#, 1]], 
+                 Identity[
+                  Part[#, 2]]}& ), 
+               "ScalingFunctions" -> {{Identity, Identity}, {
+                 Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+             False|>, 
+           "Meta" -> <|
+            "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, 
+             "Function" -> ListPlot, "GroupHighlight" -> False|>|>], 
+         ImageSizeCache -> {{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], Selectable -> 
+        False]}, 
+      Annotation[{{{}, {}, 
+         Annotation[{
+           Hue[0.67, 0.6, 0.6], 
+           Directive[
+            PointSize[0.009166666666666668], 
+            RGBColor[0.368417, 0.506779, 0.709798], 
+            AbsoluteThickness[2]], 
+           Line[CompressedData["
+1:eJw9kwtQVGUYhlHkjnJZFRKHABkuwujKTVxEXlhugsLeWHbXZUWEEEWJ20KG
+goACym4aOoqRkDmRQtKmYxcMkYpyNDEUgolcQ0TBSEJgJJipHP/PM3PmzDPP
+eb7/nH/OcU7JEqXNNzAwyPr/fHml43Tty+PrkFc0HpIn6e5y5fcyNsCvGrNz
+jjseMTbF7L6z1j2yZ4ytoR7f0LI0fprxYsxNGqaWFs0ytoc2eOXV/bx5eMXL
+MWiXlhd7zZCxE2Iu8L/0VxkxdkFF78iCoR0mjF0RPprad2XElLEbBryOz40u
+NGfsgcq2ipnHSuKVOFX7zfC+CWJveEgFSyL+JV6Faw2ePV3ChYy5OO+t1Fcn
+EK9BWj5XyO2xZOyDr0qOPunyIfZFt/6zukN2dL8fZL0fd2S7WzP2h/2DgMYp
+CxvGAbAJ+VQ1d5V4Le48K7h4o404EB5ld2KOrSZeh8S41nRHU2Ie/uSItfP6
+iYPgNBa0dNl2DuP1cIvdW9PFtWUcjDUFfrX9x4k34EWrf1N6MHEI7KJXHOOe
+onnAzlsTjlYq5kuAxS5D8TWWdH8orK3bj2veIh+KTyRQz1RTHwbPfE7wb3cZ
+l4Rh6xHOyRp38nyUyrl2Nzjk+fC83DwRMk37FQ7dSN9Qhx/5cNQ7Oa+e4VEf
+AX3E5HW9EfkIRKqL3O4Fko+Edr1LkMcHbF5JJC6NiuYS99D8KKQ3V/20aA35
+KOSatHSPxFsxHw3Li5W5Aa3ko3Fw0OF8qpzmb8RUU9uDW1X0/hsx/jxQ15xM
++xODcK8d+qcKer4YFHQOqLemUh+La3d7Y1TO5GPxhzYsc+3n5Dchx2/gn845
+8ptgaBZ0+baG/GaIvYt3fvGE/GbweJaFw0to/Tj8MD++VfCYni8OxeuLlX+L
+6fuIh+fNqWfhUvLxODOrcpfkUy/AUff6gW2ebD4EyOjrDrtiTOsJ8Oj0R+8m
+9zFuF6Bx8u38QznUC/FGJ69R58rWgxAp7wV7Paij9YSwdz+jMDFk3C5E5fNj
+e+6//r5EyMoYy160lDFEkGtXJJ11pF4Er76nuefcqBfh95w0geMq6sXYubxu
+zN6fejGshvN0dUHUiyEVmKl1odSLcTCq4H1VFPUS2JR7P7ywiXoJlnVc+qVO
+SL0EnW7mSh7tX7sE0wvKHKoU1CegxhixWvp/kAAbLf92XAr1CUj/y8W/K436
+BNzUJ33HyaBeiomk5DynTOql8Bn0NZjZQ70UWt2QviGbeilqr9YLHfKoT8Qi
+qUa5S019Imx/zrxXU0h9IsquTypP7qU+Ed73ZjMLi6iX4YDzbuG6/dTL0Pa9
+BXegmHoZbHJMzbcfoF6GE2aZbV2l1Mtxv19u6VpOvRwGTt4nth2kXo4xr933
+qw5RL0fUrhbxmQrqFSh/JzK6oZJ6BeJ8H744+vp/U2B/02JN9mHqFajvaLHn
+H6F+C340evND42rqt0C2tc78W+KSLUiykIama2zxH3qDvRg=
+            "]]}, "Charting`Private`Tag#1"]}}, <|
+       "HighlightElements" -> <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>, 
+        "LayoutOptions" -> <|
+         "PanelPlotLayout" -> <||>, 
+          "PlotRange" -> {{0, 110.}, {0, 4.8467792009426205`}}, 
+          "Frame" -> {{False, False}, {False, False}}, "AxesOrigin" -> {0, 0},
+           "ImageSize" -> {360, 360/GoldenRatio}, "Axes" -> {True, True}, 
+          "LabelStyle" -> {}, "AspectRatio" -> GoldenRatio^(-1), 
+          "DefaultStyle" -> {
+            Directive[
+             PointSize[0.009166666666666668], 
+             RGBColor[0.368417, 0.506779, 0.709798], 
+             AbsoluteThickness[2]]}, 
+          "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+              Identity[
+               Part[#, 1]], 
+              Identity[
+               Part[#, 2]]}& ), 
+            "ScalingFunctions" -> {{Identity, Identity}, {
+              Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>,
+         "Meta" -> <|
+         "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+          ListPlot, "GroupHighlight" -> False|>|>, 
+       "DynamicHighlight"]], {{}, {}}}, AspectRatio -> 
+    NCache[GoldenRatio^(-1), 0.6180339887498948], Axes -> {True, True}, 
+    AxesLabel -> {
+      FormBox[
+       TagBox["\"Time period\"", HoldForm], TraditionalForm], 
+      FormBox[
+       TagBox["\"Capital Stock\"", HoldForm], TraditionalForm]}, 
+    AxesOrigin -> {0, 0}, DisplayFunction -> Identity, 
+    Frame -> {{False, False}, {False, False}}, 
+    FrameLabel -> {{None, None}, {None, None}}, 
+    FrameTicks -> {{Automatic, Automatic}, {Automatic, Automatic}}, 
+    GridLines -> {None, None}, GridLinesStyle -> Directive[
+      GrayLevel[0.5, 0.4]], 
+    Method -> {
+     "AxisPadding" -> Scaled[0.02], "DefaultBoundaryStyle" -> Automatic, 
+      "DefaultGraphicsInteraction" -> {
+       "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+        "Effects" -> {
+         "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+          "Droplines" -> {
+           "freeformCursorMode" -> True, 
+            "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+      "DefaultMeshStyle" -> AbsolutePointSize[6], "DefaultPlotStyle" -> {
+        Directive[
+         RGBColor[0.368417, 0.506779, 0.709798], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.880722, 0.611041, 0.142051], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.560181, 0.691569, 0.194885], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.922526, 0.385626, 0.209179], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.528488, 0.470624, 0.701351], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.772079, 0.431554, 0.102387], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.363898, 0.618501, 0.782349], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[1, 0.75, 0], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.647624, 0.37816, 0.614037], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.571589, 0.586483, 0.], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.915, 0.3325, 0.2125], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.40082222609352647`, 0.5220066643438841, 0.85], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.9728288904374106, 0.621644452187053, 0.07336199581899142], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.736782672705901, 0.358, 0.5030266573755369], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.28026441037696703`, 0.715, 0.4292089322474965], 
+         AbsoluteThickness[2]]}, "DomainPadding" -> Scaled[0.02], 
+      "PointSizeFunction" -> "SmallPointSize", "RangePadding" -> Scaled[0.05],
+       "OptimizePlotMarkers" -> True, "IncludeHighlighting" -> "CurrentSet", 
+      "HighlightStyle" -> Automatic, "OptimizePlotMarkers" -> True, 
+      "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+          Identity[
+           Part[#, 1]], 
+          Identity[
+           Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+          Identity[
+           Part[#, 1]], 
+          Identity[
+           Part[#, 2]]}& )}}, 
+    PlotRange -> {{0, 110.}, {0, 4.8467792009426205`}}, PlotRangeClipping -> 
+    True, PlotRangePadding -> {{
+       Scaled[0.02], 
+       Scaled[0.02]}, {
+       Scaled[0.02], 
+       Scaled[0.05]}}, Ticks -> {Automatic, Automatic}], 
+   FormBox[
+    FormBox[
+     TemplateBox[{"\"Capital stock\""}, "PointLegend", 
+      DisplayFunction -> (FormBox[
+        StyleBox[
+         StyleBox[
+          PaneBox[
+           TagBox[
+            GridBox[{{
+               TagBox[
+                GridBox[{{
+                   GraphicsBox[{{
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[2]], {
+                    LineBox[{{0, 12.5}, {20, 12.5}}]}}, {
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[2]], {}}}, AspectRatio -> Full, 
+                    ImageSize -> {20, 12.5}, PlotRangePadding -> None, 
+                    ImagePadding -> Automatic, 
+                    BaselinePosition -> (Scaled[0.18000000000000002`] -> 
+                    Baseline)], #}}, 
+                 GridBoxAlignment -> {
+                  "Columns" -> {Center, Left}, "Rows" -> {{Baseline}}}, 
+                 AutoDelete -> False, 
+                 GridBoxDividers -> {
+                  "Columns" -> {{False}}, "Rows" -> {{False}}}, 
+                 GridBoxItemSize -> {"Columns" -> {{All}}, "Rows" -> {{All}}},
+                  GridBoxSpacings -> {"Columns" -> {{0.8, 0.5}}}], "Grid"]}}, 
+             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+             AutoDelete -> False, 
+             GridBoxDividers -> {"Columns" -> {{None}}, "Rows" -> {{None}}}, 
+             GridBoxItemSize -> {"Columns" -> {{All}}, "Rows" -> {{All}}}, 
+             GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{1}}}], 
+            "Grid"], Alignment -> Left, AppearanceElements -> None, 
+           ImageMargins -> {{5, 5}, {5, 5}}, ImageSizeAction -> 
+           "ResizeToFit"], LineIndent -> 0, StripOnInput -> False], {
+         FontFamily -> "Arial"}, Background -> Automatic, StripOnInput -> 
+         False], TraditionalForm]& ), 
+      InterpretationFunction :> (RowBox[{"PointLegend", "[", 
+         RowBox[{
+           RowBox[{"{", 
+             RowBox[{"Directive", "[", 
+               RowBox[{
+                 RowBox[{"PointSize", "[", "0.009166666666666668`", "]"}], 
+                 ",", 
+                 
+                 TemplateBox[<|
+                  "color" -> RGBColor[0.368417, 0.506779, 0.709798]|>, 
+                  "RGBColorSwatchTemplate"], ",", 
+                 RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "]"}], "}"}],
+            ",", 
+           RowBox[{"{", #, "}"}], ",", 
+           RowBox[{"LegendMarkers", "\[Rule]", 
+             RowBox[{"{", 
+               RowBox[{"{", 
+                 RowBox[{"False", ",", "Automatic"}], "}"}], "}"}]}], ",", 
+           RowBox[{"Joined", "\[Rule]", 
+             RowBox[{"{", "True", "}"}]}], ",", 
+           RowBox[{"LabelStyle", "\[Rule]", 
+             RowBox[{"{", "}"}]}], ",", 
+           RowBox[{"LegendLayout", "\[Rule]", "\"Row\""}]}], "]"}]& ), 
+      Editable -> True], TraditionalForm], TraditionalForm]},
+  "Legended",
+  DisplayFunction->(GridBox[{{
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"]}, {
+      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, GridBoxItemSize -> Automatic, 
+    BaselinePosition -> {1, 1}]& ),
+  Editable->True,
+  InterpretationFunction->(RowBox[{"Legended", "[", 
+     RowBox[{#, ",", 
+       RowBox[{"Placed", "[", 
+         RowBox[{#2, ",", "Below"}], "]"}]}], "]"}]& )]], "Output",
+ CellChangeTimes->{3.941610663192729*^9, 3.941616446005105*^9, 
+  3.941626298804538*^9, 3.941717914521975*^9, 3.941718520520186*^9, 
+  3.941719181955645*^9, 3.94171981527982*^9, 3.941720598989058*^9, 
+  3.941721507881658*^9},
+ CellLabel->"Out[66]=",ExpressionUUID->"5b9997b2-4ce4-4474-afb5-c843135aafcc"],
+
+Cell[BoxData[
+ TemplateBox[{
+   GraphicsBox[{{}, 
+     InterpretationBox[{
+       TagBox[{{}, {}, 
+         TagBox[{
+           RGBColor[0.368417, 0.506779, 0.709798], 
+           PointSize[0.0055000000000000005`], 
+           AbsoluteThickness[2], 
+           LineBox[CompressedData["
+1:eJxd0XvMFOUVx/FHxbo1QjeW6KpQp1WbDSU4KOIWtRwUZUXAURFWBR0EcUHA
+qaJsBfWBclku4njNxuvUSl2NlrGi3RosT8XaxVqcVpTFoh3UtitN2wkl5DWg
+veSdN81855/JJycnv/ye883rb778hsOVUqP6KfW/f9/XnXUwP3HlN0yvktHT
+//nC4xe9fFJqJSNPfmvJKQMLqXNwHh4olbcePeKuicenLsCDZMB7+4fu/ODY
+1JYMG5fbPeZgPvW34FOlfdKo5O92n78tD2zdeeVpC/qnLsqK35767qZjj0k9
+RM5Yc+YTk9ccmXooPExytx732HUTj0htw8PhM+AzZfNbh308eFSfR8jkj3/y
+0gY5LPVZcpsTnb/xYZV6JHy2tC++cOeDP/pyS69LUvvipnkv/vhQ6u/CoyQ5
+envxyYk9qc+RYcNMz9an9qc+Fz4P/h48GhaZdvTBfbdM3tdrDasxmMPqfMxh
+dYEs+dv6SVuH980vkKMXPTDoyuLedD42aw2rCzGH1UWYw2qc7Mg1j9rz5V/T
+OazKmMPqYlkxzvtw0ct/SeewGo/5eNl3aNJ33p3/STq/RNZa7zXW5fakc1hN
+wBxWEzGH1STMYXUp5rBy5LyzO08VZsS9FljDBlaXYR/Wl8mbb47c/MlnH6b7
+sLpcvpzxr43h7z5I92ENG1hdgX1YwwZWk2Vy+98bbnxuV7oPa9jA6kqZMniu
+c8WGvn1YwwZWU7A/RRZM2P/Izmk7033YwGpq1gLrqdKenNS2v/NOug+rStYC
+a9jA6irswxo2sLoa+7CGDayuwT6sYXONFDe8sLjaf1u6Py1rgTVsYDUd+9PF
+u+/Few989pt0HzawujZruVbc5Wet/+Lk19N92MDquqwF1rCBlZu1BYsr3Xnr
+B0zda3rtwhoOXDHqlMNPv25LmgfHsJqRtQUL7MIaDmZIOOX8ZafN35TmwzGs
+rs/aggV2YQ0HsIFjWM1EPiywC2s4mCneyN3TXxv6szQfjmeKXJL/0+ne0tG9
++bOytmCBXVjDwSyxfih3XD2k0WsDx7C6IWsLFtiFNRzABo5hNRv5sMDubMnP
+Pm5H/09/mubDwWxxHrnqK/dvD9N8OIbVjVlbsMAurOEANnAMqyryYYFdWMMB
+bOAYVnOQD8scaR888bnm6y+l+bCeI3LZro8mHNiU5sNmjrjbfn3T7BN+nubD
+am7WFiywC2s4mCsyYlT80dRX03w4nivdARtfWficSfNvytqCBXZhDQewgWNY
+zUM+LLALaziADRzDaj7yYYHd+bLwwtdXz/pVXz4cwAaOYbUgawsW2IU1HMAG
+jmF1M/JhgV1YwwFs4PhmeXqE9ejj9a1pvpd1HrZgGxbYgV3YgzXswwEcwgaO
+4BhOYPV9OTR+9SFfb0v7wxZswwI7sAt7sIZ9OIBD2MARHMMJrG5Bf9iCbVhg
+B3ZhD9awDwdweIu0xg9+obr/7bQ/HMExnMDq1qzzsAXbsMAO7MIerGEfDuAQ
+NnAEx3ACq4XoD1uwDQvswC7swRr24QAOYbNQiretffX4eHvaH47hBFa3ZZ2H
+LdiGBXZgF/ZgDftwAIewgSM4hhNY3Y7+sAXbsMAO7MIerGEfDm6X+ycNOnnm
+sVHaHzZwBMdwAqtFWedhC7ZhgZ1F8unnziXL1/w+7Q97sIZ9OIBD2MARHMMJ
+rGpZ52ELtmGpyTHFPy84K0rtwC7swbom49//6tyBJ/4h7Q8HcAibmry9t9/K
+q6a/m/aHYziB1Q9kx7gtesyW1HnYgm1YYAd2YQ/WsA8HcAgbOIJjOIHVHbJ+
+yIDG6L070v6wBduwwA7swh6sYR8O4BA2cATHcAKrxegPW7ANC+zALuzBGvbh
+AA5hA0dwDCewWoL+sAXbsMAO7MIerGEfDuAQNnAEx3ACqzvRH7Zg+07Z9/nM
+eOy099L+sAO7sAdr2IcDOIQNHMExnMDqLmm/NPKVp6a/n/aHLdiGBXZgF/Zg
+DftwAId3yaQ9G3NzHk5t4AiO4QRWd2edhy3YhgV2YBf27hZ1YPHc4Z/39Yd9
+OIBD2MARHMMJrHTWOTgPF2ALLsI2XNKy4JwhjzwxdWf6fnAZduAK7MJV2INr
+sP6vx04cf/YzqeuwDzfgAG7CIdyCDdyGI7gDx3AXTuAeWC3NOgfn4QJswUXY
+hkuwwGXYgSuwC1eXymNfax1e2tZ3f7gGa7gO+3ADDuAmHMIt2MBtOII7cAx3
+4WSpOG9+bL22r+/+sFqWdQ7OwwXYgouwDZdgWSaHDpX+MSe/K70/7MAV2IWr
+sAfXYA3XYR9uwAHcXCZzXz3w2ZrNqUO4BRu4DUdwB47hLpzAPbD6YdY5OA8X
+YAsuwjZcggUuww5cgV24CntwDdZwHfbhBhzATTiEW7CB23AEd+AY7sIJ3AOr
+5bg/nIcLsAUXYRsuwQKXYQeuwC5chT24Bmu4DvtwAw7gJhzCLdjAbTiCO3AM
+d+EE7oHVCtwfzq+QYUeu7d/Z1Xd/2IKLsA2XYIHLsANXYBeuwh5cgzVch324
+AQdwEw7hFmzgNhzBHTiGu3AC98BqZdY5OA8XYAsuwjZcggUuww5cgV24Cntw
+DdZwfaU8f9KlY90ZH6T3hxtwADfhEG7BBm7DEdyBY7gLJ3APrFZlnYPzcAG2
+4CJswyVY4DLswBXYhauwB9dgvUoGXRs+M/GJ1HXYhxtwADfhcJXMPqE9fMzX
+/5jeHzZwG47gDhzD3VVSNr+4+JeDUyerZO59pcV71+1O7w+retY5OA8XYAsu
+wjZcggUuww5cgV24CntwDdZwHfbhBhzATTiEW7CB23AEd+AY7sIJ3AOr1bg/
+nIcLsAUXYRsuwQKXYQeurJYv3jhq9otx3/3hKuzBNVjDddiHG3AAN+EQbsEG
+bsMR3IFjuAsncA+s1mSdg/NwAbbgImzDJVjgMuzAFdiFq7AH12AN12EfbsAB
+3IRDuAUbuA1HcAeO4S6cwD2wWov7w3m4AFtwEbbhEixwGXbgCuzCVdiDa7CG
+67APN+AAbsIh3IIN3IYjuAPHcBdO4B5YrcP94TxcgC24CNtwCRa4DDtwBXbh
+KuzBNVjDddiHG3AAN+EQbsEGbsMR3IFjuAsncA+s7sH94TxcgC24CNtwCRa4
+DDtwBXbhKuzBNVjDddi/Rx5aUf+kX+7D9P5wADfhEG7BBm7DEdyBY7gLJ3AP
+rNZnnYPzcAG24CJswyVY4DLswBXYXS/DnnU3hFenrsIeXIM1XId9uAEHcBMO
+4RZs4DYcwR04hrtwAvfA6t6sc3AeLsAWXIRtuAQLXIYduAK7cBX24Bqs4Trs
+ww04gJtwCLdgc68MfnJes7a+7/5wBHfgGO7CCdwDKz/rfnAOPgbOwwPhAjwI
+tnzZs/LZhx5a9FGvT4WL8FDYhkfAJfhcWOCxcBmeADvwZLgCT4NdeBZchefB
+HrwQrsFLYA0vh+vwOtiHH4Qb8GNwAD8NN+Hn4RDeBLfgzbCB34Db8NtwBO+A
+O/BuOIY//b//AxQv1+s=
+            "]]}, Annotation[#, "Charting`Private`Tag#1"]& ]}, {
+        "WolframDynamicHighlight", <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>}], 
+       StyleBox[
+        DynamicBox[
+         (Charting`HighlightActionBox["DynamicHighlight", {}, 
+          Slot["HighlightElements"], 
+          Slot["LayoutOptions"], 
+          Slot["Meta"], 
+          Charting`HighlightActionFunction["DynamicHighlight", {{{}, {}, 
+             Annotation[{
+               Hue[0.67, 0.6, 0.6], 
+               Directive[
+                PointSize[0.0055000000000000005`], 
+                RGBColor[0.368417, 0.506779, 0.709798], 
+                AbsoluteThickness[2]], 
+               Line[CompressedData["
+1:eJxd0XvMFOUVx/FHxbo1QjeW6KpQp1WbDSU4KOIWtRwUZUXAURFWBR0EcUHA
+qaJsBfWBclku4njNxuvUSl2NlrGi3RosT8XaxVqcVpTFoh3UtitN2wkl5DWg
+veSdN81855/JJycnv/ye883rb778hsOVUqP6KfW/f9/XnXUwP3HlN0yvktHT
+//nC4xe9fFJqJSNPfmvJKQMLqXNwHh4olbcePeKuicenLsCDZMB7+4fu/ODY
+1JYMG5fbPeZgPvW34FOlfdKo5O92n78tD2zdeeVpC/qnLsqK35767qZjj0k9
+RM5Yc+YTk9ccmXooPExytx732HUTj0htw8PhM+AzZfNbh308eFSfR8jkj3/y
+0gY5LPVZcpsTnb/xYZV6JHy2tC++cOeDP/pyS69LUvvipnkv/vhQ6u/CoyQ5
+envxyYk9qc+RYcNMz9an9qc+Fz4P/h48GhaZdvTBfbdM3tdrDasxmMPqfMxh
+dYEs+dv6SVuH980vkKMXPTDoyuLedD42aw2rCzGH1UWYw2qc7Mg1j9rz5V/T
+OazKmMPqYlkxzvtw0ct/SeewGo/5eNl3aNJ33p3/STq/RNZa7zXW5fakc1hN
+wBxWEzGH1STMYXUp5rBy5LyzO08VZsS9FljDBlaXYR/Wl8mbb47c/MlnH6b7
+sLpcvpzxr43h7z5I92ENG1hdgX1YwwZWk2Vy+98bbnxuV7oPa9jA6kqZMniu
+c8WGvn1YwwZWU7A/RRZM2P/Izmk7033YwGpq1gLrqdKenNS2v/NOug+rStYC
+a9jA6irswxo2sLoa+7CGDayuwT6sYXONFDe8sLjaf1u6Py1rgTVsYDUd+9PF
+u+/Few989pt0HzawujZruVbc5Wet/+Lk19N92MDquqwF1rCBlZu1BYsr3Xnr
+B0zda3rtwhoOXDHqlMNPv25LmgfHsJqRtQUL7MIaDmZIOOX8ZafN35TmwzGs
+rs/aggV2YQ0HsIFjWM1EPiywC2s4mCneyN3TXxv6szQfjmeKXJL/0+ne0tG9
++bOytmCBXVjDwSyxfih3XD2k0WsDx7C6IWsLFtiFNRzABo5hNRv5sMDubMnP
+Pm5H/09/mubDwWxxHrnqK/dvD9N8OIbVjVlbsMAurOEANnAMqyryYYFdWMMB
+bOAYVnOQD8scaR888bnm6y+l+bCeI3LZro8mHNiU5sNmjrjbfn3T7BN+nubD
+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
+O/BuOIY//b//AxQv1+s=
+                "]]}, "Charting`Private`Tag#1"]}}, <|
+           "HighlightElements" -> <|
+             "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>, 
+            "LayoutOptions" -> <|
+             "PanelPlotLayout" -> <||>, 
+              "PlotRange" -> {{0, 1081.}, {-7.6311533597410985`, 
+                0.4760488473458349}}, 
+              "Frame" -> {{False, False}, {False, False}}, 
+              "AxesOrigin" -> {0, 0}, "ImageSize" -> {360, 360/GoldenRatio}, 
+              "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+              GoldenRatio^(-1), "DefaultStyle" -> {
+                Directive[
+                 PointSize[0.0055000000000000005`], 
+                 RGBColor[0.368417, 0.506779, 0.709798], 
+                 AbsoluteThickness[2]]}, 
+              "HighlightLabelingFunctions" -> <|
+               "CoordinatesToolOptions" -> ({
+                  Identity[
+                   Part[#, 1]], 
+                  Identity[
+                   Part[#, 2]]}& ), 
+                "ScalingFunctions" -> {{Identity, Identity}, {
+                  Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+              False|>, 
+            "Meta" -> <|
+             "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, 
+              "Function" -> ListPlot, "GroupHighlight" -> False|>|>]]& )[<|
+          "HighlightElements" -> <|
+            "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>, 
+           "LayoutOptions" -> <|
+            "PanelPlotLayout" -> <||>, 
+             "PlotRange" -> {{0, 1081.}, {-7.6311533597410985`, 
+               0.4760488473458349}}, 
+             "Frame" -> {{False, False}, {False, False}}, 
+             "AxesOrigin" -> {0, 0}, "ImageSize" -> {360, 360/GoldenRatio}, 
+             "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+             GoldenRatio^(-1), "DefaultStyle" -> {
+               Directive[
+                PointSize[0.0055000000000000005`], 
+                RGBColor[0.368417, 0.506779, 0.709798], 
+                AbsoluteThickness[2]]}, 
+             "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+                 Identity[
+                  Part[#, 1]], 
+                 Identity[
+                  Part[#, 2]]}& ), 
+               "ScalingFunctions" -> {{Identity, Identity}, {
+                 Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> 
+             False|>, 
+           "Meta" -> <|
+            "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, 
+             "Function" -> ListPlot, "GroupHighlight" -> False|>|>], 
+         ImageSizeCache -> {{4.503599627370496*^15, -4.503599627370496*^15}, {
+          4.503599627370496*^15, -4.503599627370496*^15}}], Selectable -> 
+        False]}, 
+      Annotation[{{{}, {}, 
+         Annotation[{
+           Hue[0.67, 0.6, 0.6], 
+           Directive[
+            PointSize[0.0055000000000000005`], 
+            RGBColor[0.368417, 0.506779, 0.709798], 
+            AbsoluteThickness[2]], 
+           Line[CompressedData["
+1:eJxd0XvMFOUVx/FHxbo1QjeW6KpQp1WbDSU4KOIWtRwUZUXAURFWBR0EcUHA
+qaJsBfWBclku4njNxuvUSl2NlrGi3RosT8XaxVqcVpTFoh3UtitN2wkl5DWg
+veSdN81855/JJycnv/ye883rb778hsOVUqP6KfW/f9/XnXUwP3HlN0yvktHT
+//nC4xe9fFJqJSNPfmvJKQMLqXNwHh4olbcePeKuicenLsCDZMB7+4fu/ODY
+1JYMG5fbPeZgPvW34FOlfdKo5O92n78tD2zdeeVpC/qnLsqK35767qZjj0k9
+RM5Yc+YTk9ccmXooPExytx732HUTj0htw8PhM+AzZfNbh308eFSfR8jkj3/y
+0gY5LPVZcpsTnb/xYZV6JHy2tC++cOeDP/pyS69LUvvipnkv/vhQ6u/CoyQ5
+envxyYk9qc+RYcNMz9an9qc+Fz4P/h48GhaZdvTBfbdM3tdrDasxmMPqfMxh
+dYEs+dv6SVuH980vkKMXPTDoyuLedD42aw2rCzGH1UWYw2qc7Mg1j9rz5V/T
+OazKmMPqYlkxzvtw0ct/SeewGo/5eNl3aNJ33p3/STq/RNZa7zXW5fakc1hN
+wBxWEzGH1STMYXUp5rBy5LyzO08VZsS9FljDBlaXYR/Wl8mbb47c/MlnH6b7
+sLpcvpzxr43h7z5I92ENG1hdgX1YwwZWk2Vy+98bbnxuV7oPa9jA6kqZMniu
+c8WGvn1YwwZWU7A/RRZM2P/Izmk7033YwGpq1gLrqdKenNS2v/NOug+rStYC
+a9jA6irswxo2sLoa+7CGDayuwT6sYXONFDe8sLjaf1u6Py1rgTVsYDUd+9PF
+u+/Few989pt0HzawujZruVbc5Wet/+Lk19N92MDquqwF1rCBlZu1BYsr3Xnr
+B0zda3rtwhoOXDHqlMNPv25LmgfHsJqRtQUL7MIaDmZIOOX8ZafN35TmwzGs
+rs/aggV2YQ0HsIFjWM1EPiywC2s4mCneyN3TXxv6szQfjmeKXJL/0+ne0tG9
++bOytmCBXVjDwSyxfih3XD2k0WsDx7C6IWsLFtiFNRzABo5hNRv5sMDubMnP
+Pm5H/09/mubDwWxxHrnqK/dvD9N8OIbVjVlbsMAurOEANnAMqyryYYFdWMMB
+bOAYVnOQD8scaR888bnm6y+l+bCeI3LZro8mHNiU5sNmjrjbfn3T7BN+nubD
+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
+O/BuOIY//b//AxQv1+s=
+            "]]}, "Charting`Private`Tag#1"]}}, <|
+       "HighlightElements" -> <|
+         "Label" -> {"XYLabel"}, "Ball" -> {"IndicatedBall"}|>, 
+        "LayoutOptions" -> <|
+         "PanelPlotLayout" -> <||>, 
+          "PlotRange" -> {{0, 1081.}, {-7.6311533597410985`, 
+            0.4760488473458349}}, "Frame" -> {{False, False}, {False, False}},
+           "AxesOrigin" -> {0, 0}, "ImageSize" -> {360, 360/GoldenRatio}, 
+          "Axes" -> {True, True}, "LabelStyle" -> {}, "AspectRatio" -> 
+          GoldenRatio^(-1), "DefaultStyle" -> {
+            Directive[
+             PointSize[0.0055000000000000005`], 
+             RGBColor[0.368417, 0.506779, 0.709798], 
+             AbsoluteThickness[2]]}, 
+          "HighlightLabelingFunctions" -> <|"CoordinatesToolOptions" -> ({
+              Identity[
+               Part[#, 1]], 
+              Identity[
+               Part[#, 2]]}& ), 
+            "ScalingFunctions" -> {{Identity, Identity}, {
+              Identity, Identity}}|>, "Primitives" -> {}, "GCFlag" -> False|>,
+         "Meta" -> <|
+         "DefaultHighlight" -> {"Dynamic", None}, "Index" -> {}, "Function" -> 
+          ListPlot, "GroupHighlight" -> False|>|>, 
+       "DynamicHighlight"]], {{}, {}}}, AspectRatio -> 
+    NCache[GoldenRatio^(-1), 0.6180339887498948], Axes -> {True, True}, 
+    AxesLabel -> {
+      FormBox[
+       TagBox["\"Time period\"", HoldForm], TraditionalForm], 
+      FormBox[
+       TagBox["\"Fitness Score\"", HoldForm], TraditionalForm]}, 
+    AxesOrigin -> {0, 0}, DisplayFunction -> Identity, 
+    Frame -> {{False, False}, {False, False}}, 
+    FrameLabel -> {{None, None}, {None, None}}, 
+    FrameTicks -> {{Automatic, Automatic}, {Automatic, Automatic}}, 
+    GridLines -> {None, None}, GridLinesStyle -> Directive[
+      GrayLevel[0.5, 0.4]], 
+    Method -> {
+     "AxisPadding" -> Scaled[0.02], "DefaultBoundaryStyle" -> Automatic, 
+      "DefaultGraphicsInteraction" -> {
+       "Version" -> 1.2, "TrackMousePosition" -> {True, False}, 
+        "Effects" -> {
+         "Highlight" -> {"ratio" -> 2}, "HighlightPoint" -> {"ratio" -> 2}, 
+          "Droplines" -> {
+           "freeformCursorMode" -> True, 
+            "placement" -> {"x" -> "All", "y" -> "None"}}}}, 
+      "DefaultMeshStyle" -> AbsolutePointSize[6], "DefaultPlotStyle" -> {
+        Directive[
+         RGBColor[0.368417, 0.506779, 0.709798], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.880722, 0.611041, 0.142051], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.560181, 0.691569, 0.194885], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.922526, 0.385626, 0.209179], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.528488, 0.470624, 0.701351], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.772079, 0.431554, 0.102387], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.363898, 0.618501, 0.782349], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[1, 0.75, 0], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.647624, 0.37816, 0.614037], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.571589, 0.586483, 0.], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.915, 0.3325, 0.2125], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.40082222609352647`, 0.5220066643438841, 0.85], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.9728288904374106, 0.621644452187053, 0.07336199581899142], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.736782672705901, 0.358, 0.5030266573755369], 
+         AbsoluteThickness[2]], 
+        Directive[
+         RGBColor[0.28026441037696703`, 0.715, 0.4292089322474965], 
+         AbsoluteThickness[2]]}, "DomainPadding" -> Scaled[0.02], 
+      "PointSizeFunction" -> "SmallPointSize", "RangePadding" -> Scaled[0.05],
+       "OptimizePlotMarkers" -> True, "IncludeHighlighting" -> "CurrentSet", 
+      "HighlightStyle" -> Automatic, "OptimizePlotMarkers" -> True, 
+      "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+          Identity[
+           Part[#, 1]], 
+          Identity[
+           Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+          Identity[
+           Part[#, 1]], 
+          Identity[
+           Part[#, 2]]}& )}}, 
+    PlotRange -> {{0, 1081.}, {-7.6311533597410985`, 0.4760488473458349}}, 
+    PlotRangeClipping -> True, PlotRangePadding -> {{
+       Scaled[0.02], 
+       Scaled[0.02]}, {
+       Scaled[0.05], 
+       Scaled[0.05]}}, Ticks -> {Automatic, Automatic}], 
+   FormBox[
+    FormBox[
+     TemplateBox[{"\"Fitness Score\""}, "PointLegend", 
+      DisplayFunction -> (FormBox[
+        StyleBox[
+         StyleBox[
+          PaneBox[
+           TagBox[
+            GridBox[{{
+               TagBox[
+                GridBox[{{
+                   GraphicsBox[{{
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[2]], {
+                    LineBox[{{0, 12.5}, {20, 12.5}}]}}, {
+                    Directive[
+                    EdgeForm[
+                    Directive[
+                    Opacity[0.3], 
+                    GrayLevel[0]]], 
+                    PointSize[0.5], 
+                    RGBColor[0.368417, 0.506779, 0.709798], 
+                    AbsoluteThickness[2]], {}}}, AspectRatio -> Full, 
+                    ImageSize -> {20, 12.5}, PlotRangePadding -> None, 
+                    ImagePadding -> Automatic, 
+                    BaselinePosition -> (Scaled[0.18000000000000002`] -> 
+                    Baseline)], #}}, 
+                 GridBoxAlignment -> {
+                  "Columns" -> {Center, Left}, "Rows" -> {{Baseline}}}, 
+                 AutoDelete -> False, 
+                 GridBoxDividers -> {
+                  "Columns" -> {{False}}, "Rows" -> {{False}}}, 
+                 GridBoxItemSize -> {"Columns" -> {{All}}, "Rows" -> {{All}}},
+                  GridBoxSpacings -> {"Columns" -> {{0.8, 0.5}}}], "Grid"]}}, 
+             GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+             AutoDelete -> False, 
+             GridBoxDividers -> {"Columns" -> {{None}}, "Rows" -> {{None}}}, 
+             GridBoxItemSize -> {"Columns" -> {{All}}, "Rows" -> {{All}}}, 
+             GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{1}}}], 
+            "Grid"], Alignment -> Left, AppearanceElements -> None, 
+           ImageMargins -> {{5, 5}, {5, 5}}, ImageSizeAction -> 
+           "ResizeToFit"], LineIndent -> 0, StripOnInput -> False], {
+         FontFamily -> "Arial"}, Background -> Automatic, StripOnInput -> 
+         False], TraditionalForm]& ), 
+      InterpretationFunction :> (RowBox[{"PointLegend", "[", 
+         RowBox[{
+           RowBox[{"{", 
+             RowBox[{"Directive", "[", 
+               RowBox[{
+                 RowBox[{"PointSize", "[", "0.0055000000000000005`", "]"}], 
+                 ",", 
+                 
+                 TemplateBox[<|
+                  "color" -> RGBColor[0.368417, 0.506779, 0.709798]|>, 
+                  "RGBColorSwatchTemplate"], ",", 
+                 RowBox[{"AbsoluteThickness", "[", "2", "]"}]}], "]"}], "}"}],
+            ",", 
+           RowBox[{"{", #, "}"}], ",", 
+           RowBox[{"LegendMarkers", "\[Rule]", 
+             RowBox[{"{", 
+               RowBox[{"{", 
+                 RowBox[{"False", ",", "Automatic"}], "}"}], "}"}]}], ",", 
+           RowBox[{"Joined", "\[Rule]", 
+             RowBox[{"{", "True", "}"}]}], ",", 
+           RowBox[{"LabelStyle", "\[Rule]", 
+             RowBox[{"{", "}"}]}], ",", 
+           RowBox[{"LegendLayout", "\[Rule]", "\"Row\""}]}], "]"}]& ), 
+      Editable -> True], TraditionalForm], TraditionalForm]},
+  "Legended",
+  DisplayFunction->(GridBox[{{
+      TagBox[
+       ItemBox[
+        PaneBox[
+         TagBox[#, "SkipImageSizeLevel"], Alignment -> {Center, Baseline}, 
+         BaselinePosition -> Baseline], DefaultBaseStyle -> "Labeled"], 
+       "SkipImageSizeLevel"]}, {
+      ItemBox[#2, DefaultBaseStyle -> "LabeledLabel"]}}, 
+    GridBoxAlignment -> {"Columns" -> {{Center}}, "Rows" -> {{Center}}}, 
+    AutoDelete -> False, GridBoxItemSize -> Automatic, 
+    BaselinePosition -> {1, 1}]& ),
+  Editable->True,
+  InterpretationFunction->(RowBox[{"Legended", "[", 
+     RowBox[{#, ",", 
+       RowBox[{"Placed", "[", 
+         RowBox[{#2, ",", "Below"}], "]"}]}], "]"}]& )]], "Output",
+ CellChangeTimes->{3.941610663192729*^9, 3.941616446005105*^9, 
+  3.941626298804538*^9, 3.941717914521975*^9, 3.941718520520186*^9, 
+  3.941719181955645*^9, 3.94171981527982*^9, 3.941720598989058*^9, 
+  3.94172150814999*^9},
+ CellLabel->"Out[68]=",ExpressionUUID->"1a463448-5450-4422-98bd-1fca187de452"]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{331, Automatic}, {Automatic, 50}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"14.1 for Mac OS X ARM (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"fe254c1f-f869-42d0-a351-0124fbeca9d1"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 2680, 72, 542, "Text",ExpressionUUID->"bd4535c1-81db-480c-a48b-271b5da53c35"],
+Cell[3237, 94, 284, 6, 57, "Input",ExpressionUUID->"802fc329-91d0-4500-b590-5a2c0e444d73"],
+Cell[3524, 102, 57635, 1288, 8562, "Input",ExpressionUUID->"768b716f-f608-47a2-8e96-c73d8e60a4f1"],
+Cell[CellGroupData[{
+Cell[61184, 1394, 33812, 744, 5616, "Input",ExpressionUUID->"7d614356-b069-4323-88c9-7aad0c51a0a6"],
+Cell[94999, 2140, 17494, 368, 368, "Output",ExpressionUUID->"5b9997b2-4ce4-4474-afb5-c843135aafcc"],
+Cell[112496, 2510, 23755, 472, 356, "Output",ExpressionUUID->"1a463448-5450-4422-98bd-1fca187de452"]
+}, Open  ]]
+}
+]
+*)
+
