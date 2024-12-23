@@ -2,8 +2,5 @@ As a software developer for small businesses, a lot of the work I produce for my
 
 The first two files describe different methods for solving the following competitive equilibrium defined below using a Shooting Star Algorithm and a Genetic Algorithm. The files are not very easy to view on GitHub, but if you download the files, you will be able to run the application for yourself. To do the best of my knowledge, all files are safe to download.
 
-![Key](Key.png)
-![Competitive Equilibrium](Competitive%20Equilibrium.png)
-
 As a bonus, there is a shortest path algorithm, an example of dynamic programming typically used in economics for sequential decision-making, analysis of social networks, etc.
 
