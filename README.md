@@ -13,6 +13,7 @@ The first set of files demonstrates different methods for solving a competitive 
 This file includes a shortest path algorithm — an example of dynamic programming commonly used in economics for sequential decision-making, social network analysis, and more. The second file is a text file which has a sample network configuration for testing.
 
 [Link to Shortest Path.nb](https://github.com/Dhinsa12/Academic-Projects/blob/main/Shortest%20Path.nb)
+[Link to Network Configuration.txt](https://github.com/Dhinsa12/Academic-Projects/blob/main/Network%20Configuration.txt)
 
 If you are interested in my work for businesses, my first client from 2019 has allowed me to publish the first edition of the management software I created for them. This software is no longer in use.
 
