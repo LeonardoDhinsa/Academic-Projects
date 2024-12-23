@@ -10,7 +10,7 @@ The first set of files demonstrates different methods for solving a competitive 
 
 [Link to Comparison of Genetic and Shooting Star.nb](https://github.com/Dhinsa12/Academic-Projects/blob/main/Comparison%20of%20Genetic%20and%20Shooting%20Star.nb)
 
-Next, the files include a shortest path algorithm—an example of dynamic programming commonly used in economics for sequential decision-making, social network analysis, and more.
+This file includes a shortest path algorithm — an example of dynamic programming commonly used in economics for sequential decision-making, social network analysis, and more. The second file is a text file which has a sample network configuration for testing.
 
 [Link to Shortest Path.nb](https://github.com/Dhinsa12/Academic-Projects/blob/main/Shortest%20Path.nb)
 
