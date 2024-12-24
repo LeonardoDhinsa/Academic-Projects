@@ -6,7 +6,7 @@
 # Aggregate SQL functions
 # JSON parsing
 # Abstract data types
-# Calling parameterized web service APIs
+# Calling parameterized web service APIs - The token is no longer valid
 # User-generated DDL scripts
 # A complex data model within a database
 # In the standard Python installation, you should have access to many of the imported libraries. 
