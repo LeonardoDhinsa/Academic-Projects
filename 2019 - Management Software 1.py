@@ -4607,7 +4607,7 @@ except ImportError as error:  # if any modules are missing, the program cannot r
     modules_not_found_error.config(font=("Times New Roman", 30))
     modules_not_found_error.place(relx=.5, rely=.3, anchor="n")
     view = Button(window, text="Quit",
-                  command=lambda: lambda: end(window, db))
+                  command=lambda: (window.destroy(), quit()))
     view.config(bg='blanched almond')
     view.config(height=2, width=40)
     view.place(x=150, y=400)
